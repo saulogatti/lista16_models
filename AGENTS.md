@@ -22,10 +22,21 @@ A estrutura proposta separa o que o site recebe do que o painel recebe:
 - `lib/src/public/`: o que o site mostra. **Nunca** entra o contato do piloto (telefone, e-mail,
   endereço) nem o tempo de corrida (60 pés, 100 m, 201 m, velocidade final). Da corrida, só a
   reação na largada é pública.
-- `lib/src/admin/`: o que o painel recebe, inclusive os dados privados.
+- `lib/src/admin/`: o que o painel recebe, inclusive os dados privados. Só ganha tipo próprio
+  o que tem dado privado (hoje, `AdminDriver`); no resto o painel usa o tipo de `public/`.
+- `lib/src/enums/`: enums do domínio. Só entra enum com os valores já decididos pelo dono.
+- `lib/src/core/`: leitura de JSON, interno. Não é exportado.
 
-Os modelos de `lib/src/models/` vieram antes das respostas do dono e vão ser refeitos (seção 4
-do `ESTRUTURA_LISTA16.md`). Não amplie esses modelos.
+Desafio, Corrida e Movimento da lista (e o `ChallengeStatus`) esperam as dúvidas da seção 5 do
+`ESTRUTURA_LISTA16.md`.
+
+## Serialização
+
+`fromJson`/`toJson` **à mão**, sem `json_serializable` nem `build_runner`. São poucos modelos,
+os consumidores dependem do pacote por git e não rodam gerador, e as chaves já ficam em classes
+`*JsonKeys`. Para ler campo, use as funções de `lib/src/core/json_read.dart`: elas lançam
+`FormatException` em campo ausente ou de tipo errado. Enum vai no JSON pelo `jsonValue` fixo de
+cada item, nunca por `.name`. Modelo é `@immutable`, com `==` e `hashCode`.
 
 ## Regras de código
 
