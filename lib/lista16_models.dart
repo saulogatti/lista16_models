@@ -1,8 +1,14 @@
-/// Support for doing something awesome.
+/// Modelos compartilhados da Lista 16: o que a API manda para o site (`public/`) e para o
+/// painel (`admin/`), os enums e as chaves JSON.
 ///
-/// More dartdocs go here.
+/// Só DTOs: as regras da escada ficam no backend.
 library;
 
-export 'src/lista16_models_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/admin/admin_driver.dart';
+export 'src/enums/challenge_kind.dart';
+export 'src/enums/event_status.dart';
+export 'src/enums/race_outcome.dart';
+export 'src/public/car.dart';
+export 'src/public/driver.dart';
+export 'src/public/duo.dart';
+export 'src/public/race_event.dart';
