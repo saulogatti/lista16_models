@@ -188,4 +188,89 @@ void main() {
       expect(() => RaceEvent.fromJson(json), throwsFormatException);
     });
   });
+
+  group('SiteContent', () {
+    const content = SiteContent(
+      texts: SiteTexts(about: 'A lista.\n\nOs 10 mais rápidos.', regulation: 'Regra 1.'),
+      contacts: SiteContacts(
+        whatsapp: '16999990000',
+        instagram: 'lista_teste',
+        email: 'a@b.invalid',
+      ),
+    );
+
+    test('ida e volta no JSON', () {
+      expect(SiteContent.fromJson(overTheWire(content.toJson())), content);
+    });
+
+    test('vazio vai e volta com tudo null', () {
+      final json = overTheWire(const SiteContent().toJson());
+
+      expect(json[SiteContentJsonKeys.texts], {
+        SiteTextsJsonKeys.about: null,
+        SiteTextsJsonKeys.regulation: null,
+      });
+      expect(SiteContent.fromJson(json), const SiteContent());
+    });
+
+    test('textos e contatos aceitam campo ausente', () {
+      final json = <String, Object?>{
+        SiteContentJsonKeys.texts: <String, Object?>{},
+        SiteContentJsonKeys.contacts: <String, Object?>{},
+      };
+
+      expect(SiteContent.fromJson(json), const SiteContent());
+    });
+
+    test('sem o objeto dos contatos lança FormatException', () {
+      final json = {SiteContentJsonKeys.texts: <String, Object?>{}};
+
+      expect(() => SiteContent.fromJson(json), throwsFormatException);
+    });
+
+    test('contato que não é texto lança FormatException', () {
+      final json = {SiteContactsJsonKeys.whatsapp: 16999990000};
+
+      expect(() => SiteContacts.fromJson(json), throwsFormatException);
+    });
+  });
+
+  group('Sponsor', () {
+    const sponsor = Sponsor(
+      id: '019a1b2c-0000-7000-8000-000000000005',
+      name: 'Oficina Exemplo',
+      logoUrl: 'https://cdn.example/sponsors/5.png',
+      linkUrl: 'https://oficina.example',
+      position: 2,
+    );
+
+    test('ida e volta no JSON', () {
+      expect(Sponsor.fromJson(overTheWire(sponsor.toJson())), sponsor);
+    });
+
+    test('sem link vai e volta como null', () {
+      const bare = Sponsor(
+        id: 's',
+        name: 'Loja',
+        logoUrl: 'https://cdn.example/l.png',
+        position: 0,
+      );
+      final json = overTheWire(bare.toJson());
+
+      expect(json[SponsorJsonKeys.linkUrl], isNull);
+      expect(Sponsor.fromJson(json), bare);
+    });
+
+    test('posição que não é inteiro lança FormatException', () {
+      final json = sponsor.toJson()..[SponsorJsonKeys.position] = '2';
+
+      expect(() => Sponsor.fromJson(json), throwsFormatException);
+    });
+
+    test('sem logo lança FormatException', () {
+      final json = sponsor.toJson()..remove(SponsorJsonKeys.logoUrl);
+
+      expect(() => Sponsor.fromJson(json), throwsFormatException);
+    });
+  });
 }

@@ -12,3 +12,7 @@ export 'src/public/car.dart';
 export 'src/public/driver.dart';
 export 'src/public/duo.dart';
 export 'src/public/race_event.dart';
+export 'src/public/site_contacts.dart';
+export 'src/public/site_content.dart';
+export 'src/public/site_texts.dart';
+export 'src/public/sponsor.dart';
