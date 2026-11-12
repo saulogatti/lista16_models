@@ -67,4 +67,74 @@ void main() {
       expect(AdminDriver.fromJson(admin.toJson()).profile, profile);
     });
   });
+
+  group('AdminPublication', () {
+    final failed = AdminPublication(
+      queue: PublicationQueue.requested,
+      hasUnpublishedChanges: true,
+      lastPublishedAt: DateTime.utc(2026, 11, 12, 7),
+      lastAttempt: PublicationAttempt(
+        finishedAt: DateTime.utc(2026, 11, 13, 7, 3),
+        result: PublicationResult.failed,
+        message: 'build falhou',
+      ),
+    );
+
+    test('ida e volta no JSON', () {
+      final json = jsonDecode(jsonEncode(failed.toJson())) as Map<String, Object?>;
+
+      expect(AdminPublication.fromJson(json), failed);
+    });
+
+    test('os instantes saem em UTC e voltam em UTC, mesmo com outro fuso', () {
+      final json = failed.toJson();
+
+      expect(json[AdminPublicationJsonKeys.lastPublishedAt], '2026-11-12T07:00:00.000Z');
+
+      json[AdminPublicationJsonKeys.lastPublishedAt] = '2026-11-12T04:00:00-03:00';
+      final read = AdminPublication.fromJson(json).lastPublishedAt!;
+
+      expect(read.isUtc, isTrue);
+      expect(read, DateTime.utc(2026, 11, 12, 7));
+    });
+
+    test('nunca publicado: sem data e sem tentativa', () {
+      const empty = AdminPublication(queue: PublicationQueue.idle, hasUnpublishedChanges: true);
+      final json = empty.toJson();
+
+      expect(json[AdminPublicationJsonKeys.lastPublishedAt], isNull);
+      expect(json[AdminPublicationJsonKeys.lastAttempt], isNull);
+      expect(AdminPublication.fromJson(json), empty);
+    });
+
+    test('valores JSON dos enums', () {
+      expect(PublicationQueue.values.map((item) => item.jsonValue), [
+        'idle',
+        'requested',
+        'running',
+      ]);
+      expect(PublicationResult.values.map((item) => item.jsonValue), ['published', 'failed']);
+    });
+
+    test('instante sem fuso, fila desconhecida ou booleano errado lançam FormatException', () {
+      Map<String, Object?> json() => failed.toJson();
+
+      expect(
+        () => AdminPublication.fromJson(
+          json()..[AdminPublicationJsonKeys.lastPublishedAt] = '2026-11-12T07:00:00',
+        ),
+        throwsFormatException,
+      );
+      expect(
+        () => AdminPublication.fromJson(json()..[AdminPublicationJsonKeys.queue] = 'paused'),
+        throwsFormatException,
+      );
+      expect(
+        () => AdminPublication.fromJson(
+          json()..[AdminPublicationJsonKeys.hasUnpublishedChanges] = 'sim',
+        ),
+        throwsFormatException,
+      );
+    });
+  });
 }

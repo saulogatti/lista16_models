@@ -38,7 +38,8 @@ A estrutura proposta separa o que o site recebe do que o painel recebe:
   endereço) nem o tempo de corrida (60 pés, 100 m, 201 m, velocidade final). Da corrida, só a
   reação na largada é pública.
 - `lib/src/admin/`: o que o painel recebe, inclusive os dados privados. Só ganha tipo próprio
-  o que tem dado privado (hoje, `AdminDriver`); no resto o painel usa o tipo de `public/`.
+  o que tem dado privado (hoje, `AdminDriver`) ou que só o painel recebe (`AdminPublication`);
+  no resto o painel usa o tipo de `public/`.
 - `lib/src/enums/`: enums do domínio. Só entra enum com os valores já decididos pelo dono.
 - `lib/src/core/`: leitura de JSON, interno. Não é exportado.
 

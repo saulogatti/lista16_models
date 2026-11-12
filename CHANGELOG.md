@@ -1,3 +1,12 @@
+## 0.5.0
+
+Publicação do site (seção 3 do `ESTRUTURA_LISTA16.md`). Só acrescenta tipos.
+
+- `AdminPublication`: a situação que o painel mostra. Fila (`PublicationQueue`: nada, pedido
+  ou gerando), se há alteração ainda não publicada, quando o site no ar foi gerado e a última
+  tentativa (`PublicationAttempt`, com o resultado e o motivo da falha).
+- Instantes em ISO 8601 com fuso; o modelo devolve sempre em UTC.
+
 ## 0.4.0
 
 Respostas do dono ao cadastro (2.5, 5.1 e 5.4). Quebra o contrato da 0.3.0.
