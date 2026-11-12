@@ -10,6 +10,9 @@ muda.
 - `SiteContent`: os dois juntos, como o site recebe.
 - `Sponsor`: nome, logo, link opcional e a ordem de exibição (`position`).
 
+O formato dos textos e dos contatos, o que é opcional e os campos do patrocinador são
+provisórios: podem mudar quando o dono da lista responder.
+
 ## 0.2.0
 
 Modelos refeitos a partir das respostas do dono (`QUESTOES_LISTA16.md`) e da seção 6, passo 1,
