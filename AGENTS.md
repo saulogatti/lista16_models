@@ -4,6 +4,21 @@ Pacote Dart puro com os modelos compartilhados da Lista 16. Ele é usado pela AP
 (`backend_lista16`), pelo painel (`admin_lista16`) e pelo build do site (`site_lista16`). Como os
 consumidores dependem dele e como versionar estão no `README.md`.
 
+## Repositório público
+
+Este repositório é **público** desde 2026-11-11, para o CI e o build Docker dos consumidores
+baixarem o pacote sem token. Os outros três são privados. Qualquer um pode ler tudo o que entra
+aqui: código, testes, exemplos, `CHANGELOG.md` e mensagens de commit. Por isso, nunca entra
+aqui:
+
+- segredo ou credencial: token (inclusive o de desenvolvimento do admin), senha, chave,
+  `.env`, string de conexão;
+- endereço interno: host da VPS, caminho no servidor, porta do banco;
+- validação do backend ou detalhe de como ele se protege (autenticação, limites);
+- dado real de piloto (nome, telefone, e-mail, foto) em teste ou exemplo. Use dado inventado.
+
+Na dúvida, o lugar é o repositório privado que usa a informação.
+
 ## Domínio
 
 - O ranking é uma **escada de desafio**: o de baixo desafia o de cima e, se ganhar, os dois
