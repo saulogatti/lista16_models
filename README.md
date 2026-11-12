@@ -12,7 +12,7 @@ dependencies:
   lista16_models:
     git:
       url: https://github.com/saulogatti/lista16_models.git
-      ref: v0.2.0
+      ref: v0.3.0
 ```
 
 Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e tag `vX.Y.Z`.
@@ -25,11 +25,14 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 | `public/` | `Car` | carro: nome e fotos. Sem dados técnicos nem placa |
 | `public/` | `Duo` | dupla piloto + carro, que é quem ocupa a posição |
 | `public/` | `RaceEvent` | evento da lista: data, pista e `EventStatus` |
+| `public/` | `SiteContent` | conteúdo das páginas fixas: `SiteTexts` (sobre e regulamento) e `SiteContacts` (WhatsApp, Instagram e e-mail da organização) |
+| `public/` | `Sponsor` | patrocinador: nome, logo, link e ordem de exibição |
 | `admin/` | `AdminDriver` | `Driver` mais telefone e e-mail, só para o painel |
 | `enums/` | `EventStatus`, `ChallengeKind`, `RaceOutcome` | situação do evento, tipo de desafio e motivo do resultado da corrida |
 
-`public/` é o que o site pode receber; `admin/` acrescenta o que só o painel vê. Carro, dupla e
-evento não têm dado privado, então o painel usa os mesmos tipos de `public/`.
+`public/` é o que o site pode receber; `admin/` acrescenta o que só o painel vê. Carro, dupla,
+evento, conteúdo e patrocinador não têm dado privado, então o painel usa os mesmos tipos de
+`public/`.
 
 Cada modelo tem `fromJson` e `toJson`, e as chaves ficam em classes `*JsonKeys`
 (`DriverJsonKeys.nickname`, por exemplo). `fromJson` lança `FormatException` quando falta campo

@@ -1,3 +1,15 @@
+## 0.3.0
+
+Conteúdo das páginas fixas do site (resposta 5.4). Só acrescenta tipos: o que já existia não
+muda.
+
+- `SiteTexts`: textos de "Sobre" e "Regulamento", texto puro com parágrafos separados por linha
+  em branco. Opcionais: `null` enquanto o dono não mandou.
+- `SiteContacts`: WhatsApp (só dígitos, com DDD), Instagram (sem `@`) e e-mail da organização.
+  Opcionais. Não é o contato do piloto.
+- `SiteContent`: os dois juntos, como o site recebe.
+- `Sponsor`: nome, logo, link opcional e a ordem de exibição (`position`).
+
 ## 0.2.0
 
 Modelos refeitos a partir das respostas do dono (`QUESTOES_LISTA16.md`) e da seção 6, passo 1,

@@ -24,6 +24,15 @@ String? readOptionalString(JsonMap json, String key) {
   throw _invalid(key, 'texto ou null', value);
 }
 
+/// Lê um inteiro obrigatório.
+int readInt(JsonMap json, String key) {
+  final value = json[key];
+  if (value is int) {
+    return value;
+  }
+  throw _invalid(key, 'inteiro', value);
+}
+
 /// Lê uma lista de textos obrigatória (pode ser vazia).
 List<String> readStringList(JsonMap json, String key) {
   final value = json[key];
