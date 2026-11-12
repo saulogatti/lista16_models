@@ -1,0 +1,45 @@
+name: Dart
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+# Push novo no mesmo PR cancela o run anterior.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
+
+      # Pacote sem pubspec.lock no repositório: a chave sai do pubspec.yaml.
+      - name: Cache pub packages
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('pubspec.yaml') }}
+          restore-keys: pub-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Analyze project source
+        run: dart analyze
+
+      # Só as pastas de código, como na regra do AGENTS.md.
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed lib test example
+
+      - name: Run tests
+        run: dart test
