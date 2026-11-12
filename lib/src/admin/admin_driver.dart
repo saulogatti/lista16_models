@@ -14,20 +14,20 @@ abstract final class AdminDriverJsonKeys {
 /// objeto aninhado: `{id, name, nickname, city, photoUrl, logoUrl, phone, email}`.
 @immutable
 final class AdminDriver {
-  const new({required this.profile, this.phone, this.email});
+  const new({required this.profile, required this.phone, this.email});
 
   /// Lê o JSON da API; lança [FormatException] se faltar campo ou o tipo não bater.
   factory AdminDriver.fromJson(JsonMap json) => AdminDriver(
     profile: Driver.fromJson(json),
-    phone: readOptionalString(json, AdminDriverJsonKeys.phone),
+    phone: readString(json, AdminDriverJsonKeys.phone),
     email: readOptionalString(json, AdminDriverJsonKeys.email),
   );
 
   /// Dados que o site também mostra.
   final Driver profile;
 
-  /// Telefone do piloto. Só o painel vê.
-  final String? phone;
+  /// Telefone do piloto, com WhatsApp. Todo piloto tem (5.1). Só o painel vê.
+  final String phone;
 
   /// E-mail do piloto. Só o painel vê.
   final String? email;

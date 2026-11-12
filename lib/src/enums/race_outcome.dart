@@ -23,10 +23,7 @@ enum RaceOutcome {
   coinToss('coinToss'),
 
   /// Passaram os 2 eventos de prazo sem a corrida: o desafiado perde a posição para o desafiante
-  /// (2.3).
-  ///
-  /// Ainda em aberto: o caso do desafiante que não aparece (2.3) e se o prazo vale também no
-  /// desafio de entrada e na disputa de entrada.
+  /// (2.3). Não vale contra o vencedor da disputa de entrada: ali o 10º corre na hora (2.2).
   deadlineExpired('deadlineExpired');
 
   new(this.jsonValue);

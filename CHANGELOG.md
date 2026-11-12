@@ -1,3 +1,13 @@
+## 0.4.0
+
+Respostas do dono ao cadastro (2.5, 5.1 e 5.4). Quebra o contrato da 0.3.0.
+
+- `Driver.nickname` passa a ser opcional (`String?`). O novo `displayName` devolve o apelido,
+  ou o nome quando o piloto não tem apelido.
+- `AdminDriver.phone` passa a ser obrigatório: todo piloto tem telefone com WhatsApp.
+- `EventStatus.cancelled`: evento cancelado ou adiado, que fica marcado para todos saberem.
+- `Sponsor.description`: texto opcional de detalhes do patrocinador.
+
 ## 0.3.0
 
 Conteúdo das páginas fixas do site (resposta 5.4). Só acrescenta tipos: o que já existia não

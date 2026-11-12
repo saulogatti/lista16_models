@@ -77,9 +77,19 @@ void main() {
     });
 
     test('campo obrigatório ausente lança FormatException', () {
-      final json = driver.toJson()..remove(DriverJsonKeys.nickname);
+      final json = driver.toJson()..remove(DriverJsonKeys.city);
 
       expect(() => Driver.fromJson(json), throwsFormatException);
+    });
+
+    test('sem apelido vai e volta como null e aparece pelo nome', () {
+      const bare = Driver(id: 'd', name: 'Maria Souza', city: 'Franca');
+      final json = overTheWire(bare.toJson());
+
+      expect(json[DriverJsonKeys.nickname], isNull);
+      expect(Driver.fromJson(json), bare);
+      expect(bare.displayName, 'Maria Souza');
+      expect(driver.displayName, 'Joãozinho');
     });
 
     test('tipo errado lança FormatException', () {
@@ -183,7 +193,7 @@ void main() {
     });
 
     test('status desconhecido lança FormatException', () {
-      final json = event.toJson()..[RaceEventJsonKeys.status] = 'cancelled';
+      final json = event.toJson()..[RaceEventJsonKeys.status] = 'postponed';
 
       expect(() => RaceEvent.fromJson(json), throwsFormatException);
     });
@@ -241,6 +251,7 @@ void main() {
       name: 'Oficina Exemplo',
       logoUrl: 'https://cdn.example/sponsors/5.png',
       linkUrl: 'https://oficina.example',
+      description: 'Oficina de exemplo, aberta de segunda a sábado.',
       position: 2,
     );
 
@@ -248,7 +259,7 @@ void main() {
       expect(Sponsor.fromJson(overTheWire(sponsor.toJson())), sponsor);
     });
 
-    test('sem link vai e volta como null', () {
+    test('sem link e sem texto vai e volta como null', () {
       const bare = Sponsor(
         id: 's',
         name: 'Loja',
@@ -258,6 +269,7 @@ void main() {
       final json = overTheWire(bare.toJson());
 
       expect(json[SponsorJsonKeys.linkUrl], isNull);
+      expect(json[SponsorJsonKeys.description], isNull);
       expect(Sponsor.fromJson(json), bare);
     });
 
