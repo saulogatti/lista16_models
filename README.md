@@ -12,7 +12,7 @@ dependencies:
   lista16_models:
     git:
       url: https://github.com/saulogatti/lista16_models.git
-      ref: v0.4.0
+      ref: v0.5.0
 ```
 
 Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e tag `vX.Y.Z`.
@@ -28,6 +28,7 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 | `public/` | `SiteContent` | conteúdo das páginas fixas: `SiteTexts` (sobre e regulamento) e `SiteContacts` (WhatsApp, Instagram e e-mail da organização) |
 | `public/` | `Sponsor` | patrocinador: nome, logo, link, texto de detalhes opcional e ordem de exibição |
 | `admin/` | `AdminDriver` | `Driver` mais telefone (obrigatório) e e-mail, só para o painel |
+| `admin/` | `AdminPublication` | situação da publicação do site: fila (`PublicationQueue`), se há alteração não publicada, quando o site no ar foi gerado e a última tentativa (`PublicationAttempt`) |
 | `enums/` | `EventStatus`, `ChallengeKind`, `RaceOutcome` | situação do evento, tipo de desafio e motivo do resultado da corrida |
 
 `public/` é o que o site pode receber; `admin/` acrescenta o que só o painel vê. Carro, dupla,
@@ -37,7 +38,8 @@ evento, conteúdo e patrocinador não têm dado privado, então o painel usa os 
 Cada modelo tem `fromJson` e `toJson`, e as chaves ficam em classes `*JsonKeys`
 (`DriverJsonKeys.nickname`, por exemplo). `fromJson` lança `FormatException` quando falta campo
 ou o tipo não bate. Os enums vão no JSON por um valor fixo (`jsonValue`), não pelo nome em Dart.
-A data do evento vai como `AAAA-MM-DD`, sem hora.
+A data do evento vai como `AAAA-MM-DD`, sem hora. Instante (como o da publicação) vai em ISO 8601
+com fuso e volta sempre em UTC.
 
 ```dart
 final duo = Duo.fromJson(jsonDecode(body) as Map<String, Object?>);

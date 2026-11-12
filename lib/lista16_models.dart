@@ -5,6 +5,7 @@
 library;
 
 export 'src/admin/admin_driver.dart';
+export 'src/admin/admin_publication.dart';
 export 'src/enums/challenge_kind.dart';
 export 'src/enums/event_status.dart';
 export 'src/enums/race_outcome.dart';

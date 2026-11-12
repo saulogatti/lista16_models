@@ -33,6 +33,45 @@ int readInt(JsonMap json, String key) {
   throw _invalid(key, 'inteiro', value);
 }
 
+/// Lê um booleano obrigatório.
+bool readBool(JsonMap json, String key) {
+  final value = json[key];
+  if (value is bool) {
+    return value;
+  }
+  throw _invalid(key, 'booleano', value);
+}
+
+/// Lê um objeto JSON opcional: ausente ou `null` vira `null`.
+JsonMap? readOptionalMap(JsonMap json, String key) {
+  final value = json[key];
+  if (value == null || value is Map<String, Object?>) {
+    return value as JsonMap?;
+  }
+  throw _invalid(key, 'objeto ou null', value);
+}
+
+/// Lê um instante obrigatório, em ISO 8601 com fuso (`2026-11-12T07:00:00Z`).
+///
+/// Devolve o [DateTime] em UTC. Texto sem fuso é recusado: a hora mudaria com quem lê.
+DateTime readDateTime(JsonMap json, String key) {
+  final value = json[key];
+  if (value is String && _instantPattern.hasMatch(value)) {
+    final instant = DateTime.tryParse(value);
+    if (instant != null) {
+      return instant.toUtc();
+    }
+  }
+  throw _invalid(key, 'instante ISO 8601 com fuso', value);
+}
+
+/// Lê um instante opcional, como [readDateTime]: ausente ou `null` vira `null`.
+DateTime? readOptionalDateTime(JsonMap json, String key) =>
+    json[key] == null ? null : readDateTime(json, key);
+
+/// Escreve [instant] em ISO 8601, em UTC (`…Z`).
+String writeDateTime(DateTime instant) => instant.toUtc().toIso8601String();
+
 /// Lê uma lista de textos obrigatória (pode ser vazia).
 List<String> readStringList(JsonMap json, String key) {
   final value = json[key];
@@ -116,6 +155,8 @@ bool listEquals<T>(List<T> a, List<T> b) {
 }
 
 final _datePattern = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+
+final _instantPattern = RegExp(r'^\d{4}-\d{2}-\d{2}T[0-9:.]+(Z|[+-]\d{2}:?\d{2})$');
 
 FormatException _invalid(String key, String expected, Object? value) =>
     FormatException('Campo "$key": esperado $expected, veio ${value.runtimeType}');
