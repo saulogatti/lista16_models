@@ -12,7 +12,7 @@ dependencies:
   lista16_models:
     git:
       url: https://github.com/saulogatti/lista16_models.git
-      ref: v0.3.0
+      ref: v0.4.0
 ```
 
 Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e tag `vX.Y.Z`.
@@ -21,13 +21,13 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 
 | Pasta | Tipo | O que é |
 |---|---|---|
-| `public/` | `Driver` | piloto: nome, apelido, cidade, foto e logo do banner. **Sem contato** |
+| `public/` | `Driver` | piloto: nome, apelido opcional (`displayName` cai no nome), cidade, foto e logo do banner. **Sem contato** |
 | `public/` | `Car` | carro: nome e fotos. Sem dados técnicos nem placa |
 | `public/` | `Duo` | dupla piloto + carro, que é quem ocupa a posição |
-| `public/` | `RaceEvent` | evento da lista: data, pista e `EventStatus` |
+| `public/` | `RaceEvent` | evento da lista: data, pista e `EventStatus` (agendado, em andamento, encerrado ou cancelado) |
 | `public/` | `SiteContent` | conteúdo das páginas fixas: `SiteTexts` (sobre e regulamento) e `SiteContacts` (WhatsApp, Instagram e e-mail da organização) |
-| `public/` | `Sponsor` | patrocinador: nome, logo, link e ordem de exibição |
-| `admin/` | `AdminDriver` | `Driver` mais telefone e e-mail, só para o painel |
+| `public/` | `Sponsor` | patrocinador: nome, logo, link, texto de detalhes opcional e ordem de exibição |
+| `admin/` | `AdminDriver` | `Driver` mais telefone (obrigatório) e e-mail, só para o painel |
 | `enums/` | `EventStatus`, `ChallengeKind`, `RaceOutcome` | situação do evento, tipo de desafio e motivo do resultado da corrida |
 
 `public/` é o que o site pode receber; `admin/` acrescenta o que só o painel vê. Carro, dupla,
@@ -41,7 +41,7 @@ A data do evento vai como `AAAA-MM-DD`, sem hora.
 
 ```dart
 final duo = Duo.fromJson(jsonDecode(body) as Map<String, Object?>);
-print('${duo.driver.nickname} com ${duo.car.name}');
+print('${duo.driver.displayName} com ${duo.car.name}');
 ```
 
 Mais em [`example/lista16_models_example.dart`](example/lista16_models_example.dart).

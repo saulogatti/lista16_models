@@ -7,6 +7,7 @@ void main() {
       'scheduled',
       'inProgress',
       'finished',
+      'cancelled',
     ]);
     for (final item in EventStatus.values) {
       expect(EventStatus.fromJson(item.toJson()), item);
@@ -35,7 +36,7 @@ void main() {
   });
 
   test('valor desconhecido ou que não é texto lança FormatException', () {
-    expect(() => EventStatus.fromJson('cancelled'), throwsFormatException);
+    expect(() => EventStatus.fromJson('postponed'), throwsFormatException);
     expect(() => ChallengeKind.fromJson(null), throwsFormatException);
     expect(() => RaceOutcome.fromJson('draw'), throwsFormatException);
   });

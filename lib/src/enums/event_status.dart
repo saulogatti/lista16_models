@@ -1,6 +1,6 @@
 import 'package:lista16_models/src/core/json_read.dart';
 
-/// Situação de um evento da lista: agendado → em andamento → encerrado.
+/// Situação de um evento da lista: agendado → em andamento → encerrado, ou cancelado.
 ///
 /// Só no evento da lista o desafio vale, e nunca há dois eventos no mesmo mês (2.5).
 enum EventStatus {
@@ -10,8 +10,11 @@ enum EventStatus {
   /// Acontecendo. Os desafios podem acontecer até ele terminar (2.4).
   inProgress('inProgress'),
 
-  /// Terminou.
-  finished('finished');
+  /// Terminou. Fica sempre na história e não reabre (2.5).
+  finished('finished'),
+
+  /// Cancelado ou adiado. Fica marcado para todos saberem e não conta no prazo do desafio (2.5).
+  cancelled('cancelled');
 
   new(this.jsonValue);
 

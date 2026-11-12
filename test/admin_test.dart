@@ -34,10 +34,14 @@ void main() {
       expect(json[DriverJsonKeys.name], profile.name);
     });
 
-    test('contato é opcional', () {
-      final json = profile.toJson();
+    test('telefone é obrigatório e e-mail é opcional', () {
+      final withoutEmail = admin.toJson()..remove(AdminDriverJsonKeys.email);
 
-      expect(AdminDriver.fromJson(json), const AdminDriver(profile: profile));
+      expect(
+        AdminDriver.fromJson(withoutEmail),
+        const AdminDriver(profile: profile, phone: '16999990000'),
+      );
+      expect(() => AdminDriver.fromJson(profile.toJson()), throwsFormatException);
     });
 
     test('contato de tipo errado lança FormatException', () {

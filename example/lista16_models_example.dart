@@ -20,7 +20,7 @@ void main() {
   stdout.writeln(body);
 
   final parsed = Duo.fromJson(jsonDecode(body) as Map<String, Object?>);
-  stdout.writeln('${parsed.driver.nickname} com ${parsed.car.name}');
+  stdout.writeln('${parsed.driver.displayName} com ${parsed.car.name}');
 
   // O painel recebe o piloto com telefone e e-mail.
   final admin = AdminDriver(profile: parsed.driver, phone: '16999990000');

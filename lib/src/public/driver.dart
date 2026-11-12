@@ -19,8 +19,8 @@ final class Driver {
   const new({
     required this.id,
     required this.name,
-    required this.nickname,
     required this.city,
+    this.nickname,
     this.photoUrl,
     this.logoUrl,
   });
@@ -29,7 +29,7 @@ final class Driver {
   factory Driver.fromJson(JsonMap json) => Driver(
     id: readString(json, DriverJsonKeys.id),
     name: readString(json, DriverJsonKeys.name),
-    nickname: readString(json, DriverJsonKeys.nickname),
+    nickname: readOptionalString(json, DriverJsonKeys.nickname),
     city: readString(json, DriverJsonKeys.city),
     photoUrl: readOptionalString(json, DriverJsonKeys.photoUrl),
     logoUrl: readOptionalString(json, DriverJsonKeys.logoUrl),
@@ -41,11 +41,14 @@ final class Driver {
   /// Nome do piloto.
   final String name;
 
-  /// Apelido do piloto.
-  final String nickname;
+  /// Apelido do piloto. `null` quando ele não tem: aí aparece pelo nome (5.1).
+  final String? nickname;
 
-  /// Cidade do piloto. Só entra quem é de cidade com DDD 16 (1.5); a API é quem confere.
+  /// Cidade do piloto. Só entra quem é de cidade com DDD 16 (1.5); a organização não confere.
   final String city;
+
+  /// Como o piloto aparece: o apelido, ou o nome quando ele não tem apelido (5.1).
+  String get displayName => nickname ?? name;
 
   /// Endereço da foto do piloto. `null` enquanto o piloto não mandou a foto (5.5).
   final String? photoUrl;
