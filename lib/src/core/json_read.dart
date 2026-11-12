@@ -90,6 +90,51 @@ JsonMap readMap(JsonMap json, String key) {
   throw _invalid(key, 'objeto', value);
 }
 
+/// Lê um inteiro opcional: ausente ou `null` vira `null`.
+int? readOptionalInt(JsonMap json, String key) => json[key] == null ? null : readInt(json, key);
+
+/// Lê um número opcional (inteiro ou decimal) como `double`: ausente ou `null` vira `null`.
+double? readOptionalDouble(JsonMap json, String key) {
+  final value = json[key];
+  if (value == null) {
+    return null;
+  }
+  if (value is num) {
+    return value.toDouble();
+  }
+  throw _invalid(key, 'número ou null', value);
+}
+
+/// Lê uma lista de objetos JSON obrigatória (pode ser vazia) e converte cada um com [parse].
+List<T> readObjectList<T>(JsonMap json, String key, T Function(JsonMap item) parse) {
+  final value = json[key];
+  if (value is List<Object?> && value.every((item) => item is Map<String, Object?>)) {
+    return List.unmodifiable([for (final item in value.cast<JsonMap>()) parse(item)]);
+  }
+  throw _invalid(key, 'lista de objetos', value);
+}
+
+/// Lê uma lista de enums obrigatória (pode ser vazia), pelo valor JSON de cada item.
+List<T> readEnumList<T extends Enum>(
+  JsonMap json,
+  String key, {
+  required List<T> values,
+  required String Function(T item) jsonValueOf,
+}) {
+  final value = json[key];
+  if (value is List<Object?>) {
+    return List.unmodifiable([
+      for (final item in value)
+        enumFromJson(item, values: values, jsonValueOf: jsonValueOf, typeName: key),
+    ]);
+  }
+  throw _invalid(key, 'lista', value);
+}
+
+/// Lê uma data de calendário opcional, como [readDate]: ausente ou `null` vira `null`.
+DateTime? readOptionalDate(JsonMap json, String key) =>
+    json[key] == null ? null : readDate(json, key);
+
 /// Lê uma data de calendário (`AAAA-MM-DD`), sem hora nem fuso.
 ///
 /// Devolve um [DateTime] em UTC à meia-noite, para a data não mudar com o fuso de quem lê.

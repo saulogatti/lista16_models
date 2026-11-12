@@ -38,13 +38,14 @@ A estrutura proposta separa o que o site recebe do que o painel recebe:
   endereço) nem o tempo de corrida (60 pés, 100 m, 201 m, velocidade final). Da corrida, só a
   reação na largada é pública.
 - `lib/src/admin/`: o que o painel recebe, inclusive os dados privados. Só ganha tipo próprio
-  o que tem dado privado (hoje, `AdminDriver`) ou que só o painel recebe (`AdminPublication`);
-  no resto o painel usa o tipo de `public/`.
+  o que tem dado privado (`AdminDriver`, `AdminRaceRun`, `AdminChallenge`) ou que só o painel
+  recebe (`AdminPublication`, `AdminLadder` e os enums de ações liberadas); no resto o painel
+  usa o tipo de `public/`.
 - `lib/src/enums/`: enums do domínio. Só entra enum com os valores já decididos pelo dono.
 - `lib/src/core/`: leitura de JSON, interno. Não é exportado.
 
-Desafio, Corrida e Movimento da lista (e o `ChallengeStatus`) esperam as dúvidas da seção 5 do
-`ESTRUTURA_LISTA16.md`.
+Desafio, Corrida, Disputa de entrada e Movimento entraram na 0.6.0. As regras que ainda são
+dúvida (seção 5 do `ESTRUTURA_LISTA16.md`) ficam no motor do backend, não nos modelos.
 
 ## Serialização
 
