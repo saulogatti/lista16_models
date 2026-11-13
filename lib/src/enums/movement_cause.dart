@@ -11,6 +11,10 @@ enum MovementCause {
   /// Alguém não apareceu para correr o desafio (2.2 e 2.3).
   noShow('noShow'),
 
+  /// Venceu a disputa de entrada, ou era o único candidato, e entrou direto na vaga aberta da
+  /// lista incompleta, sem desafiar ninguém (1.3).
+  qualifier('qualifier'),
+
   /// A dupla saiu da lista (parou de correr, punição…), e quem estava abaixo subiu (4.1).
   left('left'),
 

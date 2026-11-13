@@ -1,3 +1,8 @@
+## 0.9.0
+
+- `MovementCause.qualifier` (`qualifier`): o vencedor da disputa de entrada, ou o candidato
+  único, entra direto na vaga aberta da lista incompleta, sem desafiar ninguém (1.3).
+
 ## 0.8.0
 
 Cadastro por dupla: um piloto, um carro (1.2), e o histórico é da dupla (5.3). Quebra o
