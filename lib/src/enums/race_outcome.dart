@@ -16,7 +16,8 @@ enum RaceOutcome {
   crossedCenterLine('crossedCenterLine'),
 
   /// Chegaram juntos e o desempate foi pelos tempos que a cronometragem tem e o site não mostra,
-  /// nesta ordem: reação, 60 pés, 100 m, velocidade final (3.4).
+  /// nesta ordem: reação, 60 pés, 100 m, velocidade final (3.4). Qual critério decidiu só o
+  /// painel vê (`TiebreakCriterion`).
   tiebreak('tiebreak'),
 
   /// Chegaram juntos e todos os tempos do desempate deram iguais: cara ou coroa (3.4).
@@ -24,7 +25,13 @@ enum RaceOutcome {
 
   /// Passaram os 2 eventos de prazo sem a corrida: o desafiado perde a posição para o desafiante
   /// (2.3). Não vale contra o vencedor da disputa de entrada: ali o 10º corre na hora (2.2).
-  deadlineExpired('deadlineExpired');
+  deadlineExpired('deadlineExpired'),
+
+  /// O carro do perdedor quebrou e não completou os 201 m (3.3).
+  didNotFinish('didNotFinish'),
+
+  /// O perdedor não apareceu para correr (2.2 e 2.3).
+  noShow('noShow');
 
   new(this.jsonValue);
 

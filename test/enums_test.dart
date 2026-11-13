@@ -29,10 +29,65 @@ void main() {
       'tiebreak',
       'coinToss',
       'deadlineExpired',
+      'didNotFinish',
+      'noShow',
     ]);
     for (final item in RaceOutcome.values) {
       expect(RaceOutcome.fromJson(item.toJson()), item);
     }
+  });
+
+  /// Valores JSON de [values], na ordem, e ida e volta por [fromJson].
+  void stable<T extends Enum>(
+    List<T> values,
+    String Function(T) toJson,
+    T Function(Object?) fromJson,
+    List<String> expected,
+  ) {
+    expect(values.map(toJson), expected);
+    for (final item in values) {
+      expect(fromJson(toJson(item)), item);
+    }
+  }
+
+  test('enums do desafio e do movimento: valores JSON estáveis e ida e volta', () {
+    stable(ChallengeStatus.values, (i) => i.toJson(), ChallengeStatus.fromJson, [
+      'pending',
+      'closed',
+      'cancelled',
+    ]);
+    stable(ChallengeOrigin.values, (i) => i.toJson(), ChallengeOrigin.fromJson, [
+      'scheduled',
+      'atEvent',
+    ]);
+    stable(MovementCause.values, (i) => i.toJson(), MovementCause.fromJson, [
+      'challenge',
+      'deadlineExpired',
+      'noShow',
+      'left',
+      'carChange',
+      'inactivity',
+      'manualAdjustment',
+      'initialLoad',
+    ]);
+    stable(TiebreakCriterion.values, (i) => i.toJson(), TiebreakCriterion.fromJson, [
+      'reaction',
+      'sixtyFeet',
+      'hundredMeters',
+      'trapSpeed',
+    ]);
+    stable(ChallengeAction.values, (i) => i.toJson(), ChallengeAction.fromJson, [
+      'recordRace',
+      'expireDeadline',
+      'recordNoShow',
+      'cancel',
+    ]);
+    stable(DuoAction.values, (i) => i.toJson(), DuoAction.fromJson, ['challenge', 'leave']);
+    stable(LadderAction.values, (i) => i.toJson(), LadderAction.fromJson, [
+      'loadInitial',
+      'reorder',
+      'startQualifier',
+    ]);
   });
 
   test('valor desconhecido ou que não é texto lança FormatException', () {

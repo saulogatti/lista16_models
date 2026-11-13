@@ -1,3 +1,30 @@
+## 0.6.0
+
+Desafio, Corrida, Disputa de entrada e Movimento da lista (etapa 4 do `ESTRUTURA_LISTA16.md`),
+com as respostas do dono de 2026-11-12.
+
+- `public/`, o que o site recebe (da corrida, só a reação na largada, 3.6):
+  - `LadderEntry`: posição de 1 a 10 e a dupla. A lista pode ter menos de 10 (1.3).
+  - `Challenge`: desafio por posição ou de entrada, posição em jogo, evento, se foi marcado
+    antes ou feito no evento (`ChallengeOrigin`, 2.7), situação (`ChallengeStatus`), resultado
+    e a reação de cada um.
+  - `Movement`: mudança de posição com a causa (`MovementCause`), o motivo escrito pela
+    organização, o desafio e o evento de origem e a ordem no registro.
+  - `EntryQualifier`, `QualifierRound` e `QualifierPairing`: disputa de entrada com as rodadas
+    sorteadas, o W.O. e o desafio que o vencedor lançou contra o 10º (2.2).
+- `admin/`, só o painel:
+  - `AdminRaceRun`: os tempos da cronometragem e as faltas (3.2 a 3.4).
+  - `AdminChallenge`: o `Challenge` mais os tempos, o critério de desempate
+    (`TiebreakCriterion`), os eventos que já contam no prazo e as ações que a API libera
+    (`ChallengeAction`).
+  - `AdminLadder` e `AdminLadderEntry`: a lista com as ações liberadas para a lista
+    (`LadderAction`) e para cada dupla (`DuoAction`), se ela deve defesa (2.4) e por que não
+    pode desafiar.
+- `Car` ganha `workshop` (`Workshop`, opcional): a oficina que prepara o carro, com nome e
+  Instagram opcional. Aparece no top 10 e na página da dupla (5.2).
+- `RaceOutcome` ganha `didNotFinish` (quebrou antes dos 201 m, 3.3) e `noShow` (não apareceu,
+  2.2 e 2.3). Os valores que já existiam não mudam.
+
 ## 0.5.0
 
 Publicação do site (seção 3 do `ESTRUTURA_LISTA16.md`). Só acrescenta tipos.

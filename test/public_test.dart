@@ -104,18 +104,47 @@ void main() {
       expect(Car.fromJson(overTheWire(car.toJson())), car);
     });
 
-    test('tem só id, nome e fotos', () {
+    test('tem só id, nome, fotos e oficina', () {
       expect(
         car.toJson().keys,
-        unorderedEquals(<String>[CarJsonKeys.id, CarJsonKeys.name, CarJsonKeys.photoUrls]),
+        unorderedEquals(<String>[
+          CarJsonKeys.id,
+          CarJsonKeys.name,
+          CarJsonKeys.photoUrls,
+          CarJsonKeys.workshop,
+        ]),
       );
     });
 
-    test('sem fotos vai como lista vazia', () {
+    test('sem fotos e sem oficina vai como lista vazia e null', () {
       const bare = Car(id: 'c', name: 'Fusca');
 
       expect(bare.toJson()[CarJsonKeys.photoUrls], isEmpty);
+      expect(bare.toJson()[CarJsonKeys.workshop], isNull);
       expect(Car.fromJson(overTheWire(bare.toJson())), bare);
+    });
+
+    test('a oficina vai e volta, com ou sem Instagram', () {
+      const withInstagram = Car(
+        id: 'c',
+        name: 'Fusca',
+        workshop: Workshop(name: 'Oficina Teste', instagram: 'oficina_teste'),
+      );
+      const withoutInstagram = Car(
+        id: 'c',
+        name: 'Fusca',
+        workshop: Workshop(name: 'Oficina'),
+      );
+
+      expect(Car.fromJson(overTheWire(withInstagram.toJson())), withInstagram);
+      expect(Car.fromJson(overTheWire(withoutInstagram.toJson())), withoutInstagram);
+      expect(withInstagram, isNot(withoutInstagram));
+    });
+
+    test('oficina sem nome lança FormatException', () {
+      final json = car.toJson()..[CarJsonKeys.workshop] = {WorkshopJsonKeys.instagram: 'x'};
+
+      expect(() => Car.fromJson(json), throwsFormatException);
     });
 
     test('foto que não é texto lança FormatException', () {

@@ -1,7 +1,7 @@
 name: lista16_models
-description: Modelos compartilhados da Lista 16 (piloto, carro, dupla, evento, conteúdo do site, publicação e enums).
+description: Modelos compartilhados da Lista 16 (cadastro, lista, desafios, conteúdo do site, publicação e enums).
 publish_to: none
-version: 0.5.0
+version: 0.6.0
 
 environment:
   sdk: ^3.13.7
