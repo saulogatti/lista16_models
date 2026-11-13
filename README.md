@@ -12,7 +12,7 @@ dependencies:
   lista16_models:
     git:
       url: https://github.com/saulogatti/lista16_models.git
-      ref: v0.6.0
+      ref: v0.7.0
 ```
 
 Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e tag `vX.Y.Z`.
@@ -22,7 +22,7 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 | Pasta | Tipo | O que é |
 |---|---|---|
 | `public/` | `Driver` | piloto: nome, apelido opcional (`displayName` cai no nome), cidade, foto e logo do banner. **Sem contato** |
-| `public/` | `Car` | carro: nome, fotos e a oficina (`Workshop`, opcional). Sem dados técnicos nem placa |
+| `public/` | `Car` | carro: nome, fotos, a oficina (`Workshop`, opcional) e se o site mostra o histórico de desafios (`showsHistory`, 5.3). Sem dados técnicos nem placa |
 | `public/` | `Workshop` | oficina que prepara o carro: nome e Instagram opcional, sem o `@` |
 | `public/` | `Duo` | dupla piloto + carro, que é quem ocupa a posição |
 | `public/` | `RaceEvent` | evento da lista: data, pista e `EventStatus` (agendado, em andamento, encerrado ou cancelado) |
