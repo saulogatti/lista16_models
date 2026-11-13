@@ -1,20 +1,9 @@
 import 'package:lista16_models/src/core/json_read.dart';
 
 /// Por que uma dupla mudou de posição na lista.
+///
+/// Toda mudança é feita na mão pela organização: o sistema não aplica regra da escada (8.2).
 enum MovementCause {
-  /// Desafio por posição ou de entrada decidido na corrida.
-  challenge('challenge'),
-
-  /// O desafiado deixou passar o prazo de 2 eventos sem correr (2.3).
-  deadlineExpired('deadlineExpired'),
-
-  /// Alguém não apareceu para correr o desafio (2.2 e 2.3).
-  noShow('noShow'),
-
-  /// Venceu a disputa de entrada, ou era o único candidato, e entrou direto na vaga aberta da
-  /// lista incompleta, sem desafiar ninguém (1.3).
-  qualifier('qualifier'),
-
   /// A dupla saiu da lista (parou de correr, punição…), e quem estava abaixo subiu (4.1).
   left('left'),
 
@@ -22,14 +11,9 @@ enum MovementCause {
   /// Os dados novos viram outra dupla, que começa fora da lista.
   duoChange('duoChange'),
 
-  /// A dupla ficou parada e perdeu posição, ou saiu da lista no 10º (4.2).
-  inactivity('inactivity'),
-
-  /// Ajuste manual da organização, com motivo que aparece no site (4.3).
-  manualAdjustment('manualAdjustment'),
-
-  /// Carga da ordem da lista quando o sistema começou a ser usado (1.6).
-  initialLoad('initialLoad');
+  /// A organização editou a ordem: a dupla entrou, saiu ou mudou de posição (4.3, 8.2). Vale
+  /// também para a primeira ordem da lista (1.6).
+  manualAdjustment('manualAdjustment');
 
   new(this.jsonValue);
 

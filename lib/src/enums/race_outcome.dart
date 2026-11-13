@@ -2,35 +2,22 @@ import 'package:lista16_models/src/core/json_read.dart';
 
 /// Motivo do resultado de uma corrida: por que o vencedor venceu.
 ///
-/// O desafio é uma corrida só, sem baterias (3.1). Não existe empate (3.4). Os motivos de pista
-/// (de [finishedBehind] a [coinToss]) valem para o desafio por posição e para a disputa de
-/// entrada (2.2, 3.2, 3.3).
+/// Quem escolhe o motivo é a organização, junto com o vencedor: o sistema não calcula o
+/// resultado nem o desempate (8.2). O desafio é uma corrida só, sem baterias (3.1).
 enum RaceOutcome {
-  /// O perdedor chegou atrás nos 201 m (3.2).
+  /// O perdedor chegou atrás nos 201 m.
   finishedBehind('finishedBehind'),
 
-  /// O perdedor queimou a largada (3.3).
+  /// O perdedor queimou a largada.
   falseStart('falseStart'),
 
-  /// O perdedor invadiu a faixa do meio da pista (3.3).
+  /// O perdedor invadiu a faixa do meio da pista.
   crossedCenterLine('crossedCenterLine'),
 
-  /// Chegaram juntos e o desempate foi pelos tempos que a cronometragem tem e o site não mostra,
-  /// nesta ordem: reação, 60 pés, 100 m, velocidade final (3.4). Qual critério decidiu só o
-  /// painel vê (`TiebreakCriterion`).
-  tiebreak('tiebreak'),
-
-  /// Chegaram juntos e todos os tempos do desempate deram iguais: cara ou coroa (3.4).
-  coinToss('coinToss'),
-
-  /// Passaram os 2 eventos de prazo sem a corrida: o desafiado perde a posição para o desafiante
-  /// (2.3). Não vale contra o vencedor da disputa de entrada: ali o 10º corre na hora (2.2).
-  deadlineExpired('deadlineExpired'),
-
-  /// O carro do perdedor quebrou e não completou os 201 m (3.3).
+  /// O carro do perdedor quebrou e não completou os 201 m.
   didNotFinish('didNotFinish'),
 
-  /// O perdedor não apareceu para correr (2.2 e 2.3).
+  /// O perdedor não apareceu para correr.
   noShow('noShow');
 
   new(this.jsonValue);

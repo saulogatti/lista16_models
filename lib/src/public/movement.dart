@@ -12,15 +12,13 @@ abstract final class MovementJsonKeys {
   static const to = 'to';
   static const cause = 'cause';
   static const reason = 'reason';
-  static const challengeId = 'challengeId';
-  static const eventId = 'eventId';
   static const date = 'date';
 }
 
 /// Mudança de posição de uma dupla na lista, com a causa.
 ///
 /// O registro de movimentos só recebe acréscimos, e o ranking sai dele. É também a história da
-/// lista: "por que fulano caiu" (1.6, 4.3).
+/// lista: "por que fulano caiu" (1.6, 4.3). Toda mudança é feita na mão (8.2).
 @immutable
 final class Movement {
   const new({
@@ -32,8 +30,6 @@ final class Movement {
     this.from,
     this.to,
     this.reason,
-    this.challengeId,
-    this.eventId,
   });
 
   /// Lê o JSON da API; lança [FormatException] se faltar campo ou o tipo não bater.
@@ -46,8 +42,6 @@ final class Movement {
     from: readOptionalInt(json, MovementJsonKeys.from),
     to: readOptionalInt(json, MovementJsonKeys.to),
     reason: readOptionalString(json, MovementJsonKeys.reason),
-    challengeId: readOptionalString(json, MovementJsonKeys.challengeId),
-    eventId: readOptionalString(json, MovementJsonKeys.eventId),
   );
 
   /// Identificador (UUID v7 gerado pela API).
@@ -68,14 +62,8 @@ final class Movement {
   /// Por que a dupla mudou de posição.
   final MovementCause cause;
 
-  /// Motivo escrito pela organização: obrigatório no ajuste manual (4.3), opcional na saída.
+  /// Motivo escrito pela organização, sempre opcional. Aparece no site (4.3).
   final String? reason;
-
-  /// Desafio que causou o movimento, quando houve.
-  final String? challengeId;
-
-  /// Evento em que o movimento aconteceu, quando houve.
-  final String? eventId;
 
   /// Dia do movimento.
   final DateTime date;
@@ -89,8 +77,6 @@ final class Movement {
     MovementJsonKeys.to: to,
     MovementJsonKeys.cause: cause.toJson(),
     MovementJsonKeys.reason: reason,
-    MovementJsonKeys.challengeId: challengeId,
-    MovementJsonKeys.eventId: eventId,
     MovementJsonKeys.date: writeDate(date),
   };
 
@@ -104,21 +90,8 @@ final class Movement {
       other.to == to &&
       other.cause == cause &&
       other.reason == reason &&
-      other.challengeId == challengeId &&
-      other.eventId == eventId &&
       writeDate(other.date) == writeDate(date);
 
   @override
-  int get hashCode => Object.hash(
-    id,
-    sequence,
-    duo,
-    from,
-    to,
-    cause,
-    reason,
-    challengeId,
-    eventId,
-    writeDate(date),
-  );
+  int get hashCode => Object.hash(id, sequence, duo, from, to, cause, reason, writeDate(date));
 }

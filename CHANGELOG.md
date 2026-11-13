@@ -1,3 +1,25 @@
+## 0.10.0
+
+Lista livre: o sistema não aplica as regras da escada (8.2). A organização edita a lista na
+mão, e desafio e corrida são só registro. Quebra o contrato, o que vale antes da 1.0.0.
+
+- **Quebra:** saem `ChallengeKind`, `EntryQualifier` (com `QualifierRound` e
+  `QualifierPairing`), `AdminLadder`, `AdminLadderEntry`, `AdminChallenge`,
+  `TiebreakCriterion` e as ações liberadas (`ChallengeAction`, `DuoAction`, `LadderAction`).
+- **Quebra:** `Challenge` perde `kind` e `position`. Desafiante e desafiado são livres.
+- **Quebra:** `Movement` perde `challengeId` e `eventId`; o `reason` é sempre opcional.
+- **Quebra:** `MovementCause` fica com `left`, `duoChange` e `manualAdjustment`. A primeira
+  ordem da lista também é `manualAdjustment`.
+- **Quebra:** `RaceOutcome` fica com `finishedBehind`, `falseStart`, `crossedCenterLine`,
+  `didNotFinish` e `noShow`, escolhidos pela organização. Saem `tiebreak`, `coinToss` e
+  `deadlineExpired`.
+- **Quebra:** `AdminRaceRun` perde `jumpedStart`, `crossedCenterLine` e `didNotFinish`: a
+  falta vira o motivo da corrida.
+- `AdminRace`: corrida de um desafio ou avulsa, com o vencedor, o motivo, uma observação e os
+  tempos.
+- `LadderOrderInputJsonKeys`, `LadderExitInputJsonKeys`, `ChallengeInputJsonKeys` e
+  `RaceInputJsonKeys`: chaves dos corpos que o painel manda.
+
 ## 0.9.0
 
 - `MovementCause.qualifier` (`qualifier`): o vencedor da disputa de entrada, ou o candidato
