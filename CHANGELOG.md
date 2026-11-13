@@ -1,3 +1,18 @@
+## 0.8.0
+
+Cadastro por dupla: um piloto, um carro (1.2), e o histórico é da dupla (5.3). Quebra o
+contrato, o que vale antes da 1.0.0.
+
+- **Quebra:** `showsHistory` sai do `Car` e vai para o `Duo` (padrão `false`; ausente no JSON
+  também vale `false`). O carro que vai para outro piloto não leva o histórico.
+- **Quebra:** `MovementCause.carChange` (`carChange`) vira `MovementCause.duoChange`
+  (`duoChange`): mudou o carro ou o piloto, a dupla sai da lista e os dados novos viram outra
+  dupla.
+- `AdminDuo`, só para o painel: a dupla com o `AdminDriver`, a marca do histórico e a posição
+  na lista (`null` fora dela).
+- `DuoInputJsonKeys`: chaves do corpo com que o painel cria e edita a dupla, com o piloto e o
+  carro juntos, e `leaveLadder` para tirar da lista ao salvar.
+
 ## 0.7.0
 
 - `Car` ganha `showsHistory` (padrão `false`; ausente no JSON também vale `false`): a

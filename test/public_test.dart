@@ -104,7 +104,7 @@ void main() {
       expect(Car.fromJson(overTheWire(car.toJson())), car);
     });
 
-    test('tem só id, nome, fotos, oficina e a marca de histórico', () {
+    test('tem só id, nome, fotos e oficina: o histórico é da dupla', () {
       expect(
         car.toJson().keys,
         unorderedEquals(<String>[
@@ -112,7 +112,6 @@ void main() {
           CarJsonKeys.name,
           CarJsonKeys.photoUrls,
           CarJsonKeys.workshop,
-          CarJsonKeys.showsHistory,
         ]),
       );
     });
@@ -140,22 +139,6 @@ void main() {
       expect(Car.fromJson(overTheWire(withInstagram.toJson())), withInstagram);
       expect(Car.fromJson(overTheWire(withoutInstagram.toJson())), withoutInstagram);
       expect(withInstagram, isNot(withoutInstagram));
-    });
-
-    test('o histórico fica desligado por padrão e liga quando a organização escolhe', () {
-      const shown = Car(id: 'c', name: 'Fusca', showsHistory: true);
-      final withoutKey = car.toJson()..remove(CarJsonKeys.showsHistory);
-
-      expect(car.showsHistory, isFalse);
-      expect(Car.fromJson(withoutKey).showsHistory, isFalse);
-      expect(Car.fromJson(overTheWire(shown.toJson())), shown);
-      expect(shown, isNot(const Car(id: 'c', name: 'Fusca')));
-    });
-
-    test('marca de histórico que não é booleano lança FormatException', () {
-      final json = car.toJson()..[CarJsonKeys.showsHistory] = 'sim';
-
-      expect(() => Car.fromJson(json), throwsFormatException);
     });
 
     test('oficina sem nome lança FormatException', () {
@@ -196,6 +179,22 @@ void main() {
 
     test('carro ausente lança FormatException', () {
       final json = duo.toJson()..remove(DuoJsonKeys.car);
+
+      expect(() => Duo.fromJson(json), throwsFormatException);
+    });
+
+    test('o histórico fica desligado por padrão e liga quando a organização escolhe', () {
+      const shown = Duo(id: 'd', driver: driver, car: car, showsHistory: true);
+      final withoutKey = duo.toJson()..remove(DuoJsonKeys.showsHistory);
+
+      expect(duo.showsHistory, isFalse);
+      expect(Duo.fromJson(withoutKey).showsHistory, isFalse);
+      expect(Duo.fromJson(overTheWire(shown.toJson())), shown);
+      expect(shown, isNot(const Duo(id: 'd', driver: driver, car: car)));
+    });
+
+    test('marca de histórico que não é booleano lança FormatException', () {
+      final json = duo.toJson()..[DuoJsonKeys.showsHistory] = 'sim';
 
       expect(() => Duo.fromJson(json), throwsFormatException);
     });

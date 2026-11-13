@@ -6,6 +6,7 @@ library;
 
 export 'src/admin/admin_challenge.dart';
 export 'src/admin/admin_driver.dart';
+export 'src/admin/admin_duo.dart';
 export 'src/admin/admin_enums.dart';
 export 'src/admin/admin_ladder.dart';
 export 'src/admin/admin_publication.dart';

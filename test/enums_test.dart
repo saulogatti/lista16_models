@@ -65,7 +65,7 @@ void main() {
       'deadlineExpired',
       'noShow',
       'left',
-      'carChange',
+      'duoChange',
       'inactivity',
       'manualAdjustment',
       'initialLoad',

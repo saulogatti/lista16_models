@@ -68,6 +68,55 @@ void main() {
     });
   });
 
+  group('AdminDuo', () {
+    const car = Car(id: '019a1b2c-0000-7000-8000-000000000002', name: 'Opalão');
+    const duo = AdminDuo(
+      id: '019a1b2c-0000-7000-8000-000000000003',
+      driver: admin,
+      car: car,
+      showsHistory: true,
+      position: 3,
+    );
+
+    test('ida e volta no JSON, com o contato do piloto', () {
+      final json = jsonDecode(jsonEncode(duo.toJson())) as Map<String, Object?>;
+
+      expect(AdminDuo.fromJson(json), duo);
+      expect(
+        (json[DuoJsonKeys.driver]! as Map<String, Object?>)[AdminDriverJsonKeys.phone],
+        '16999990000',
+      );
+    });
+
+    test('fora da lista, a posição vai como null', () {
+      const outside = AdminDuo(id: 'd', driver: admin, car: car);
+      final json = jsonDecode(jsonEncode(outside.toJson())) as Map<String, Object?>;
+
+      expect(json[AdminDuoJsonKeys.position], isNull);
+      expect(AdminDuo.fromJson(json), outside);
+    });
+
+    test('public é a mesma dupla sem o contato', () {
+      expect(
+        duo.public,
+        const Duo(
+          id: '019a1b2c-0000-7000-8000-000000000003',
+          driver: profile,
+          car: car,
+          showsHistory: true,
+        ),
+      );
+    });
+
+    test('posição que não é número ou marca ausente lançam FormatException', () {
+      final textPosition = duo.toJson()..[AdminDuoJsonKeys.position] = '3';
+      final withoutMark = duo.toJson()..remove(DuoJsonKeys.showsHistory);
+
+      expect(() => AdminDuo.fromJson(textPosition), throwsFormatException);
+      expect(() => AdminDuo.fromJson(withoutMark), throwsFormatException);
+    });
+  });
+
   group('AdminPublication', () {
     final failed = AdminPublication(
       queue: PublicationQueue.requested,

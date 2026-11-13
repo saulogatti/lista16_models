@@ -12,7 +12,7 @@ dependencies:
   lista16_models:
     git:
       url: https://github.com/saulogatti/lista16_models.git
-      ref: v0.7.0
+      ref: v0.8.0
 ```
 
 Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e tag `vX.Y.Z`.
@@ -22,9 +22,9 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 | Pasta | Tipo | O que é |
 |---|---|---|
 | `public/` | `Driver` | piloto: nome, apelido opcional (`displayName` cai no nome), cidade, foto e logo do banner. **Sem contato** |
-| `public/` | `Car` | carro: nome, fotos, a oficina (`Workshop`, opcional) e se o site mostra o histórico de desafios (`showsHistory`, 5.3). Sem dados técnicos nem placa |
+| `public/` | `Car` | carro: nome, fotos e a oficina (`Workshop`, opcional). Sem dados técnicos nem placa |
 | `public/` | `Workshop` | oficina que prepara o carro: nome e Instagram opcional, sem o `@` |
-| `public/` | `Duo` | dupla piloto + carro, que é quem ocupa a posição |
+| `public/` | `Duo` | dupla piloto + carro, que é quem ocupa a posição, e se o site mostra o histórico de desafios dela (`showsHistory`, 5.3) |
 | `public/` | `RaceEvent` | evento da lista: data, pista e `EventStatus` (agendado, em andamento, encerrado ou cancelado) |
 | `public/` | `SiteContent` | conteúdo das páginas fixas: `SiteTexts` (sobre e regulamento) e `SiteContacts` (WhatsApp, Instagram e e-mail da organização) |
 | `public/` | `Sponsor` | patrocinador: nome, logo, link, texto de detalhes opcional e ordem de exibição |
@@ -33,15 +33,15 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 | `public/` | `Movement` | mudança de posição na lista, com a causa e o motivo; é a história da lista |
 | `public/` | `EntryQualifier` | disputa de entrada: candidatos, rodadas (`QualifierRound`), confrontos (`QualifierPairing`) e W.O. |
 | `admin/` | `AdminDriver` | `Driver` mais telefone (obrigatório) e e-mail, só para o painel |
+| `admin/` | `AdminDuo` | dupla com o `AdminDriver`, a marca do histórico e a posição na lista; `DuoInputJsonKeys` são as chaves do corpo com que o painel cria e edita a dupla, com o piloto e o carro juntos |
 | `admin/` | `AdminRaceRun` | tempos da cronometragem e faltas de uma dupla numa corrida |
 | `admin/` | `AdminChallenge` | `Challenge` mais os tempos, o critério de desempate, a conta do prazo e as ações liberadas (`ChallengeAction`) |
 | `admin/` | `AdminLadder` | a lista com as ações liberadas para ela (`LadderAction`) e para cada dupla (`AdminLadderEntry`, `DuoAction`) |
 | `admin/` | `AdminPublication` | situação da publicação do site: fila (`PublicationQueue`), se há alteração não publicada, quando o site no ar foi gerado e a última tentativa (`PublicationAttempt`) |
 | `enums/` | `EventStatus`, `ChallengeKind`, `ChallengeOrigin`, `ChallengeStatus`, `RaceOutcome`, `MovementCause` | situação do evento, tipo, origem e situação do desafio, motivo do resultado e causa do movimento |
 
-`public/` é o que o site pode receber; `admin/` acrescenta o que só o painel vê. Carro, dupla,
-evento, conteúdo e patrocinador não têm dado privado, então o painel usa os mesmos tipos de
-`public/`.
+`public/` é o que o site pode receber; `admin/` acrescenta o que só o painel vê. Carro, evento,
+conteúdo e patrocinador não têm dado privado, então o painel usa os mesmos tipos de `public/`.
 
 Cada modelo tem `fromJson` e `toJson`, e as chaves ficam em classes `*JsonKeys`
 (`DriverJsonKeys.nickname`, por exemplo). `fromJson` lança `FormatException` quando falta campo
@@ -56,5 +56,5 @@ print('${duo.driver.displayName} com ${duo.car.name}');
 
 Mais em [`example/lista16_models_example.dart`](example/lista16_models_example.dart).
 
-Ainda não tem Desafio, Corrida, Movimento da lista nem ranking: dependem de dúvidas abertas com
-o dono (seção 5 do `ESTRUTURA_LISTA16.md`, no `site_lista16`).
+As regras que ainda são dúvida com o dono (seção 5 do `ESTRUTURA_LISTA16.md`, no
+`site_lista16`) ficam no motor do backend, não aqui.
