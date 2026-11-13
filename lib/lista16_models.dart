@@ -28,3 +28,4 @@ export 'src/public/site_contacts.dart';
 export 'src/public/site_content.dart';
 export 'src/public/site_texts.dart';
 export 'src/public/sponsor.dart';
+export 'src/public/workshop.dart';

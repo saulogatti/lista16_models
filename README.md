@@ -22,7 +22,8 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 | Pasta | Tipo | O que é |
 |---|---|---|
 | `public/` | `Driver` | piloto: nome, apelido opcional (`displayName` cai no nome), cidade, foto e logo do banner. **Sem contato** |
-| `public/` | `Car` | carro: nome e fotos. Sem dados técnicos nem placa |
+| `public/` | `Car` | carro: nome, fotos e a oficina (`Workshop`, opcional). Sem dados técnicos nem placa |
+| `public/` | `Workshop` | oficina que prepara o carro: nome e Instagram opcional, sem o `@` |
 | `public/` | `Duo` | dupla piloto + carro, que é quem ocupa a posição |
 | `public/` | `RaceEvent` | evento da lista: data, pista e `EventStatus` (agendado, em andamento, encerrado ou cancelado) |
 | `public/` | `SiteContent` | conteúdo das páginas fixas: `SiteTexts` (sobre e regulamento) e `SiteContacts` (WhatsApp, Instagram e e-mail da organização) |

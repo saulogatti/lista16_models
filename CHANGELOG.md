@@ -20,6 +20,8 @@ com as respostas do dono de 2026-11-12.
   - `AdminLadder` e `AdminLadderEntry`: a lista com as ações liberadas para a lista
     (`LadderAction`) e para cada dupla (`DuoAction`), se ela deve defesa (2.4) e por que não
     pode desafiar.
+- `Car` ganha `workshop` (`Workshop`, opcional): a oficina que prepara o carro, com nome e
+  Instagram opcional. Aparece no top 10 e na página da dupla (5.2).
 - `RaceOutcome` ganha `didNotFinish` (quebrou antes dos 201 m, 3.3) e `noShow` (não apareceu,
   2.2 e 2.3). Os valores que já existiam não mudam.
 
