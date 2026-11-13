@@ -14,8 +14,9 @@ enum MovementCause {
   /// A dupla saiu da lista (parou de correr, punição…), e quem estava abaixo subiu (4.1).
   left('left'),
 
-  /// O piloto trocou de carro: a dupla saiu da lista, e quem estava abaixo subiu (1.2).
-  carChange('carChange'),
+  /// Mudou o carro ou o piloto da dupla: ela saiu da lista, e quem estava abaixo subiu (1.2).
+  /// Os dados novos viram outra dupla, que começa fora da lista.
+  duoChange('duoChange'),
 
   /// A dupla ficou parada e perdeu posição, ou saiu da lista no 10º (4.2).
   inactivity('inactivity'),
