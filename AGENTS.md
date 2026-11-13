@@ -21,14 +21,15 @@ Na dúvida, o lugar é o repositório privado que usa a informação.
 
 ## Domínio
 
-- O ranking é uma **escada de desafio**: o de baixo desafia o de cima e, se ganhar, os dois
-  trocam de posição. Quem ocupa a posição é a **dupla** piloto + carro.
+- O ranking é uma **escada de desafio**, mas o sistema não aplica as regras dela (8.2): elas
+  mudam muito, e a organização edita a lista na mão. Desafio e corrida são só registro. Quem
+  ocupa a posição é a **dupla** piloto + carro.
 - Antes de modelar, leia `QUESTOES_LISTA16.md` (respostas do dono da lista) e
   `ESTRUTURA_LISTA16.md` (proposta de estrutura) no repositório `site_lista16`, pasta local
   `~/repo/lista_16/site_lista16`. Modelo que depende de uma dúvida ainda aberta espera a resposta
   do dono.
-- Este pacote tem só DTOs, enums e chaves JSON. Regra de negócio (quem pode desafiar, prazo,
-  troca de posição) fica no backend, não aqui.
+- Este pacote tem só DTOs, enums e chaves JSON. Não modele regra da escada (quem pode desafiar,
+  prazo, troca de posição, desempate, ações liberadas): nem aqui nem no backend (8.2).
 
 ## Público e painel
 
@@ -38,14 +39,14 @@ A estrutura proposta separa o que o site recebe do que o painel recebe:
   endereço) nem o tempo de corrida (60 pés, 100 m, 201 m, velocidade final). Da corrida, só a
   reação na largada é pública.
 - `lib/src/admin/`: o que o painel recebe, inclusive os dados privados. Só ganha tipo próprio
-  o que tem dado privado (`AdminDriver`, `AdminRaceRun`, `AdminChallenge`) ou que só o painel
-  recebe (`AdminPublication`, `AdminLadder` e os enums de ações liberadas); no resto o painel
-  usa o tipo de `public/`.
+  o que tem dado privado (`AdminDriver`, `AdminRaceRun`, `AdminRace`) ou que só o painel
+  recebe (`AdminPublication`); no resto o painel usa o tipo de `public/`. As chaves dos corpos
+  que o painel manda ficam em `*InputJsonKeys` (`admin_duo.dart`, `ladder_inputs.dart`).
 - `lib/src/enums/`: enums do domínio. Só entra enum com os valores já decididos pelo dono.
 - `lib/src/core/`: leitura de JSON, interno. Não é exportado.
 
-Desafio, Corrida, Disputa de entrada e Movimento entraram na 0.6.0. As regras que ainda são
-dúvida (seção 5 do `ESTRUTURA_LISTA16.md`) ficam no motor do backend, não nos modelos.
+Desafio, Corrida e Movimento entraram na 0.6.0. Na 0.10.0 viraram registro livre (8.2), e a
+Disputa de entrada saiu: os confrontos dela são corridas avulsas (`AdminRace` sem desafio).
 
 ## Serialização
 

@@ -12,7 +12,7 @@ dependencies:
   lista16_models:
     git:
       url: https://github.com/saulogatti/lista16_models.git
-      ref: v0.9.0
+      ref: v0.10.0
 ```
 
 Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e tag `vX.Y.Z`.
@@ -29,16 +29,15 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 | `public/` | `SiteContent` | conteúdo das páginas fixas: `SiteTexts` (sobre e regulamento) e `SiteContacts` (WhatsApp, Instagram e e-mail da organização) |
 | `public/` | `Sponsor` | patrocinador: nome, logo, link, texto de detalhes opcional e ordem de exibição |
 | `public/` | `LadderEntry` | posição na lista (de 1 a 10) e a dupla |
-| `public/` | `Challenge` | desafio por posição ou de entrada: duplas, posição em jogo, evento, origem, situação, resultado e a reação de cada um |
-| `public/` | `Movement` | mudança de posição na lista, com a causa e o motivo; é a história da lista |
-| `public/` | `EntryQualifier` | disputa de entrada: candidatos, rodadas (`QualifierRound`), confrontos (`QualifierPairing`) e W.O. |
+| `public/` | `Challenge` | desafio lançado livre pela organização: duplas, evento, origem, situação, resultado da corrida e a reação de cada um |
+| `public/` | `Movement` | mudança de posição na lista, com a causa e o motivo opcional; é a história da lista |
 | `admin/` | `AdminDriver` | `Driver` mais telefone (obrigatório) e e-mail, só para o painel |
 | `admin/` | `AdminDuo` | dupla com o `AdminDriver`, a marca do histórico e a posição na lista; `DuoInputJsonKeys` são as chaves do corpo com que o painel cria e edita a dupla, com o piloto e o carro juntos |
-| `admin/` | `AdminRaceRun` | tempos da cronometragem e faltas de uma dupla numa corrida |
-| `admin/` | `AdminChallenge` | `Challenge` mais os tempos, o critério de desempate, a conta do prazo e as ações liberadas (`ChallengeAction`) |
-| `admin/` | `AdminLadder` | a lista com as ações liberadas para ela (`LadderAction`) e para cada dupla (`AdminLadderEntry`, `DuoAction`) |
+| `admin/` | `AdminRaceRun` | tempos da cronometragem de uma dupla numa corrida, todos opcionais |
+| `admin/` | `AdminRace` | corrida de um desafio ou avulsa (por exemplo, da disputa de entrada): as duas duplas, o vencedor e o motivo marcados pela organização, uma observação e os tempos |
+| `admin/` | `*InputJsonKeys` | chaves dos corpos que o painel manda: ordem da lista, saída, desafio e corrida (`ladder_inputs.dart`) |
 | `admin/` | `AdminPublication` | situação da publicação do site: fila (`PublicationQueue`), se há alteração não publicada, quando o site no ar foi gerado e a última tentativa (`PublicationAttempt`) |
-| `enums/` | `EventStatus`, `ChallengeKind`, `ChallengeOrigin`, `ChallengeStatus`, `RaceOutcome`, `MovementCause` | situação do evento, tipo, origem e situação do desafio, motivo do resultado e causa do movimento |
+| `enums/` | `EventStatus`, `ChallengeOrigin`, `ChallengeStatus`, `RaceOutcome`, `MovementCause` | situação do evento, origem e situação do desafio, motivo do resultado e causa do movimento |
 
 `public/` é o que o site pode receber; `admin/` acrescenta o que só o painel vê. Carro, evento,
 conteúdo e patrocinador não têm dado privado, então o painel usa os mesmos tipos de `public/`.
@@ -56,5 +55,5 @@ print('${duo.driver.displayName} com ${duo.car.name}');
 
 Mais em [`example/lista16_models_example.dart`](example/lista16_models_example.dart).
 
-As regras que ainda são dúvida com o dono (seção 5 do `ESTRUTURA_LISTA16.md`, no
-`site_lista16`) ficam no motor do backend, não aqui.
+O sistema não aplica as regras da escada (pergunta 8.2 do `QUESTOES_LISTA16.md`, no
+`site_lista16`): a organização edita a lista na mão, e desafio e corrida são só registro.

@@ -2,17 +2,16 @@ import 'package:lista16_models/src/core/json_read.dart';
 
 /// Situação de um desafio.
 ///
-/// Não existe aceitar nem recusar: o desafio nasce pendente (2.3).
+/// O desafio é só registro: nenhuma situação muda a lista sozinha (8.2).
 enum ChallengeStatus {
-  /// Lançado e ainda sem resultado. O desafiado tem 2 eventos para correr (2.3); no desafio de
-  /// entrada, o 10º corre na hora (2.2).
+  /// Lançado e ainda sem corrida.
   pending('pending'),
 
-  /// Decidido: na corrida, por prazo vencido ou por falta. O motivo fica em `RaceOutcome`.
+  /// A corrida foi lançada, com o vencedor e o motivo (`RaceOutcome`). Apagar a corrida volta o
+  /// desafio para [pending].
   closed('closed'),
 
-  /// Cancelado pela organização sem resultado, por exemplo porque as posições mudaram antes da
-  /// corrida.
+  /// Cancelado pela organização sem corrida.
   cancelled('cancelled');
 
   new(this.jsonValue);
