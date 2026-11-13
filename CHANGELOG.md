@@ -1,3 +1,9 @@
+## 0.7.0
+
+- `Car` ganha `showsHistory` (padrão `false`; ausente no JSON também vale `false`): a
+  organização escolhe quais carros mostram no site o histórico de desafios (5.3). O
+  histórico em si usa o `Challenge` que já existe, só com a reação na largada (3.6).
+
 ## 0.6.0
 
 Desafio, Corrida, Disputa de entrada e Movimento da lista (etapa 4 do `ESTRUTURA_LISTA16.md`),

@@ -104,7 +104,7 @@ void main() {
       expect(Car.fromJson(overTheWire(car.toJson())), car);
     });
 
-    test('tem só id, nome, fotos e oficina', () {
+    test('tem só id, nome, fotos, oficina e a marca de histórico', () {
       expect(
         car.toJson().keys,
         unorderedEquals(<String>[
@@ -112,6 +112,7 @@ void main() {
           CarJsonKeys.name,
           CarJsonKeys.photoUrls,
           CarJsonKeys.workshop,
+          CarJsonKeys.showsHistory,
         ]),
       );
     });
@@ -139,6 +140,22 @@ void main() {
       expect(Car.fromJson(overTheWire(withInstagram.toJson())), withInstagram);
       expect(Car.fromJson(overTheWire(withoutInstagram.toJson())), withoutInstagram);
       expect(withInstagram, isNot(withoutInstagram));
+    });
+
+    test('o histórico fica desligado por padrão e liga quando a organização escolhe', () {
+      const shown = Car(id: 'c', name: 'Fusca', showsHistory: true);
+      final withoutKey = car.toJson()..remove(CarJsonKeys.showsHistory);
+
+      expect(car.showsHistory, isFalse);
+      expect(Car.fromJson(withoutKey).showsHistory, isFalse);
+      expect(Car.fromJson(overTheWire(shown.toJson())), shown);
+      expect(shown, isNot(const Car(id: 'c', name: 'Fusca')));
+    });
+
+    test('marca de histórico que não é booleano lança FormatException', () {
+      final json = car.toJson()..[CarJsonKeys.showsHistory] = 'sim';
+
+      expect(() => Car.fromJson(json), throwsFormatException);
     });
 
     test('oficina sem nome lança FormatException', () {
