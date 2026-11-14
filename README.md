@@ -12,7 +12,7 @@ dependencies:
   lista16_models:
     git:
       url: https://github.com/saulogatti/lista16_models.git
-      ref: v0.10.0
+      ref: v0.11.0
 ```
 
 Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e tag `vX.Y.Z`.
@@ -36,6 +36,8 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 | `admin/` | `AdminRaceRun` | tempos da cronometragem de uma dupla numa corrida, todos opcionais |
 | `admin/` | `AdminRace` | corrida de um desafio ou avulsa (por exemplo, da disputa de entrada): as duas duplas, o vencedor e o motivo marcados pela organização, uma observação e os tempos |
 | `admin/` | `*InputJsonKeys` | chaves dos corpos que o painel manda: ordem da lista, saída, desafio e corrida (`ladder_inputs.dart`) |
+| `admin/` | `Editor`, `EditorSession` | quem entra no painel (nome e usuário) e a sessão aberta no login: token de acesso, quando ele vence, token de renovação e o editor; `LoginInputJsonKeys`, `RefreshInputJsonKeys` e `PasswordChangeInputJsonKeys` são as chaves dos corpos |
+| `admin/` | `AdminMovement` | `Movement` mais o editor que fez a mudança, só para o painel |
 | `admin/` | `AdminPublication` | situação da publicação do site: fila (`PublicationQueue`), se há alteração não publicada, quando o site no ar foi gerado e a última tentativa (`PublicationAttempt`) |
 | `enums/` | `EventStatus`, `ChallengeOrigin`, `ChallengeStatus`, `RaceOutcome`, `MovementCause` | situação do evento, origem e situação do desafio, motivo do resultado e causa do movimento |
 

@@ -6,9 +6,11 @@ library;
 
 export 'src/admin/admin_driver.dart';
 export 'src/admin/admin_duo.dart';
+export 'src/admin/admin_movement.dart';
 export 'src/admin/admin_publication.dart';
 export 'src/admin/admin_race.dart';
 export 'src/admin/admin_race_run.dart';
+export 'src/admin/editor_session.dart';
 export 'src/admin/ladder_inputs.dart';
 export 'src/enums/challenge_origin.dart';
 export 'src/enums/challenge_status.dart';

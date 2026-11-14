@@ -1,3 +1,15 @@
+## 0.11.0
+
+Login dos editores do painel (6.1), no lugar do token fixo. Só acrescenta.
+
+- `Editor`: quem entra no painel, com nome e usuário.
+- `EditorSession`: a sessão do login e da renovação, com o token de acesso, quando ele
+  vence, o token de renovação e o editor.
+- `LoginInputJsonKeys`, `RefreshInputJsonKeys` e `PasswordChangeInputJsonKeys`: chaves dos
+  corpos do login, da renovação e da saída, e da troca de senha.
+- `AdminMovement`: o `Movement` mais o editor que fez a mudança, só para o painel. O site
+  continua recebendo o `Movement` sem o editor.
+
 ## 0.10.0
 
 Lista livre: o sistema não aplica as regras da escada (8.2). A organização edita a lista na
