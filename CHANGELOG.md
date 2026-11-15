@@ -1,3 +1,14 @@
+## 0.12.0
+
+Foto tratada pela API. Só acrescenta: os campos de link (`Driver.photoUrl`, `Driver.logoUrl`,
+`Car.photoUrls`, `Sponsor.logoUrl`) continuam e saem quando os consumidores trocarem para a
+foto nova.
+
+- `Photo`: foto enviada pelo painel e tratada uma vez pela API, com um id tirado do conteúdo
+  e os tamanhos (`PhotoSize`: largura, altura e caminho a partir do endereço da API), do
+  menor para o maior. `atLeast` escolhe o menor tamanho que chega numa largura.
+- `PhotoUploadFields`: o campo do arquivo no envio da foto (`multipart/form-data`).
+
 ## 0.11.0
 
 Login dos editores do painel (6.1), no lugar do token fixo. Só acrescenta.

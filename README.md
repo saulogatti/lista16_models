@@ -12,7 +12,7 @@ dependencies:
   lista16_models:
     git:
       url: https://github.com/saulogatti/lista16_models.git
-      ref: v0.11.0
+      ref: v0.12.0
 ```
 
 Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e tag `vX.Y.Z`.
@@ -23,6 +23,7 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 |---|---|---|
 | `public/` | `Driver` | piloto: nome, apelido opcional (`displayName` cai no nome), cidade, foto e logo do banner. **Sem contato** |
 | `public/` | `Car` | carro: nome, fotos e a oficina (`Workshop`, opcional). Sem dados técnicos nem placa |
+| `public/` | `Photo` | foto tratada pela API: id tirado do conteúdo e os tamanhos (`PhotoSize`: largura, altura e caminho a partir do endereço da API), do menor para o maior |
 | `public/` | `Workshop` | oficina que prepara o carro: nome e Instagram opcional, sem o `@` |
 | `public/` | `Duo` | dupla piloto + carro, que é quem ocupa a posição, e se o site mostra o histórico de desafios dela (`showsHistory`, 5.3) |
 | `public/` | `RaceEvent` | evento da lista: data, pista e `EventStatus` (agendado, em andamento, encerrado ou cancelado) |

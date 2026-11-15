@@ -23,6 +23,7 @@ export 'src/public/driver.dart';
 export 'src/public/duo.dart';
 export 'src/public/ladder_entry.dart';
 export 'src/public/movement.dart';
+export 'src/public/photo.dart';
 export 'src/public/race_event.dart';
 export 'src/public/site_contacts.dart';
 export 'src/public/site_content.dart';
