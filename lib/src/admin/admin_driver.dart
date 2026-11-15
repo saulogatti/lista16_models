@@ -11,7 +11,7 @@ abstract final class AdminDriverJsonKeys {
 /// Piloto como o painel recebe: os dados públicos ([profile]) mais o contato.
 ///
 /// O contato nunca vai para o site (5.1). No JSON os campos ficam no mesmo nível, sem
-/// objeto aninhado: `{id, name, nickname, city, photoUrl, logoUrl, phone, email}`.
+/// objeto aninhado: `{id, name, nickname, city, photo, logo, phone, email}`.
 @immutable
 final class AdminDriver {
   const new({required this.profile, required this.phone, this.email});

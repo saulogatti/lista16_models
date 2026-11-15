@@ -1,11 +1,12 @@
 import 'package:lista16_models/src/core/json_read.dart';
+import 'package:lista16_models/src/public/photo.dart';
 import 'package:meta/meta.dart';
 
 /// Chaves JSON de [Sponsor].
 abstract final class SponsorJsonKeys {
   static const id = 'id';
   static const name = 'name';
-  static const logoUrl = 'logoUrl';
+  static const logo = 'logo';
   static const linkUrl = 'linkUrl';
   static const description = 'description';
   static const position = 'position';
@@ -18,7 +19,7 @@ final class Sponsor {
   const new({
     required this.id,
     required this.name,
-    required this.logoUrl,
+    required this.logo,
     required this.position,
     this.linkUrl,
     this.description,
@@ -28,7 +29,7 @@ final class Sponsor {
   factory Sponsor.fromJson(JsonMap json) => Sponsor(
     id: readString(json, SponsorJsonKeys.id),
     name: readString(json, SponsorJsonKeys.name),
-    logoUrl: readString(json, SponsorJsonKeys.logoUrl),
+    logo: Photo.fromJson(readMap(json, SponsorJsonKeys.logo)),
     linkUrl: readOptionalString(json, SponsorJsonKeys.linkUrl),
     description: readOptionalString(json, SponsorJsonKeys.description),
     position: readInt(json, SponsorJsonKeys.position),
@@ -40,8 +41,8 @@ final class Sponsor {
   /// Nome do patrocinador.
   final String name;
 
-  /// Endereço da logo.
-  final String logoUrl;
+  /// Logo do patrocinador.
+  final Photo logo;
 
   /// Endereço do site do patrocinador. `null` quando não tem.
   final String? linkUrl;
@@ -56,7 +57,7 @@ final class Sponsor {
   JsonMap toJson() => {
     SponsorJsonKeys.id: id,
     SponsorJsonKeys.name: name,
-    SponsorJsonKeys.logoUrl: logoUrl,
+    SponsorJsonKeys.logo: logo.toJson(),
     SponsorJsonKeys.linkUrl: linkUrl,
     SponsorJsonKeys.description: description,
     SponsorJsonKeys.position: position,
@@ -67,11 +68,11 @@ final class Sponsor {
       other is Sponsor &&
       other.id == id &&
       other.name == name &&
-      other.logoUrl == logoUrl &&
+      other.logo == logo &&
       other.linkUrl == linkUrl &&
       other.description == description &&
       other.position == position;
 
   @override
-  int get hashCode => Object.hash(id, name, logoUrl, linkUrl, description, position);
+  int get hashCode => Object.hash(id, name, logo, linkUrl, description, position);
 }
