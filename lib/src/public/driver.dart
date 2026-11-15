@@ -1,4 +1,5 @@
 import 'package:lista16_models/src/core/json_read.dart';
+import 'package:lista16_models/src/public/photo.dart';
 import 'package:meta/meta.dart';
 
 /// Chaves JSON de [Driver].
@@ -7,8 +8,8 @@ abstract final class DriverJsonKeys {
   static const name = 'name';
   static const nickname = 'nickname';
   static const city = 'city';
-  static const photoUrl = 'photoUrl';
-  static const logoUrl = 'logoUrl';
+  static const photo = 'photo';
+  static const logo = 'logo';
 }
 
 /// Piloto como o site mostra (5.1): nome, apelido, cidade, foto e a logo do banner.
@@ -21,8 +22,8 @@ final class Driver {
     required this.name,
     required this.city,
     this.nickname,
-    this.photoUrl,
-    this.logoUrl,
+    this.photo,
+    this.logo,
   });
 
   /// Lê o JSON da API; lança [FormatException] se faltar campo ou o tipo não bater.
@@ -31,8 +32,8 @@ final class Driver {
     name: readString(json, DriverJsonKeys.name),
     nickname: readOptionalString(json, DriverJsonKeys.nickname),
     city: readString(json, DriverJsonKeys.city),
-    photoUrl: readOptionalString(json, DriverJsonKeys.photoUrl),
-    logoUrl: readOptionalString(json, DriverJsonKeys.logoUrl),
+    photo: _readPhoto(json, DriverJsonKeys.photo),
+    logo: _readPhoto(json, DriverJsonKeys.logo),
   );
 
   /// Identificador (UUID v7 gerado pela API).
@@ -50,11 +51,11 @@ final class Driver {
   /// Como o piloto aparece: o apelido, ou o nome quando ele não tem apelido (5.1).
   String get displayName => nickname ?? name;
 
-  /// Endereço da foto do piloto. `null` enquanto o piloto não mandou a foto (5.5).
-  final String? photoUrl;
+  /// Foto do piloto. `null` enquanto o piloto não mandou a foto (5.5).
+  final Photo? photo;
 
-  /// Endereço da logo do piloto, mostrada num banner. Só quando o piloto tem logo (5.1).
-  final String? logoUrl;
+  /// Logo do piloto, mostrada num banner. Só quando o piloto tem logo (5.1).
+  final Photo? logo;
 
   /// JSON no formato da API. Campo opcional sem valor vai como `null`.
   JsonMap toJson() => {
@@ -62,8 +63,8 @@ final class Driver {
     DriverJsonKeys.name: name,
     DriverJsonKeys.nickname: nickname,
     DriverJsonKeys.city: city,
-    DriverJsonKeys.photoUrl: photoUrl,
-    DriverJsonKeys.logoUrl: logoUrl,
+    DriverJsonKeys.photo: photo?.toJson(),
+    DriverJsonKeys.logo: logo?.toJson(),
   };
 
   @override
@@ -73,9 +74,15 @@ final class Driver {
       other.name == name &&
       other.nickname == nickname &&
       other.city == city &&
-      other.photoUrl == photoUrl &&
-      other.logoUrl == logoUrl;
+      other.photo == photo &&
+      other.logo == logo;
 
   @override
-  int get hashCode => Object.hash(id, name, nickname, city, photoUrl, logoUrl);
+  int get hashCode => Object.hash(id, name, nickname, city, photo, logo);
 }
+
+/// A foto em [key], ou `null` se ela falta ou vem `null`.
+Photo? _readPhoto(JsonMap json, String key) => switch (readOptionalMap(json, key)) {
+  final photo? => Photo.fromJson(photo),
+  null => null,
+};

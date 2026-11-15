@@ -7,19 +7,33 @@ import 'package:test/test.dart';
 Map<String, Object?> overTheWire(Map<String, Object?> json) =>
     jsonDecode(jsonEncode(json)) as Map<String, Object?>;
 
+/// Foto de teste com um tamanho só.
+const _photoA = Photo(
+  id: 'aaaaaaaaaaaaaaaa',
+  sizes: [PhotoSize(width: 640, height: 480, path: '/midia/aaaaaaaaaaaaaaaa-640.jpg')],
+);
+const _photoB = Photo(
+  id: 'bbbbbbbbbbbbbbbb',
+  sizes: [PhotoSize(width: 640, height: 480, path: '/midia/bbbbbbbbbbbbbbbb-640.jpg')],
+);
+const _logo = Photo(
+  id: 'cccccccccccccccc',
+  sizes: [PhotoSize(width: 400, height: 100, path: '/midia/cccccccccccccccc-400.png')],
+);
+
 void main() {
   const driver = Driver(
     id: '019a1b2c-0000-7000-8000-000000000001',
     name: 'João da Silva',
     nickname: 'Joãozinho',
     city: 'Ribeirão Preto',
-    photoUrl: 'https://cdn.example/drivers/1.jpg',
-    logoUrl: 'https://cdn.example/drivers/1-logo.png',
+    photo: _photoA,
+    logo: _logo,
   );
   const car = Car(
     id: '019a1b2c-0000-7000-8000-000000000002',
     name: 'Opalão',
-    photoUrls: ['https://cdn.example/cars/2-a.jpg', 'https://cdn.example/cars/2-b.jpg'],
+    photos: [_photoA, _photoB],
   );
 
   group('Driver', () {
@@ -31,8 +45,8 @@ void main() {
       const bare = Driver(id: 'd', name: 'Ana', nickname: 'Aninha', city: 'Franca');
       final json = overTheWire(bare.toJson());
 
-      expect(json[DriverJsonKeys.photoUrl], isNull);
-      expect(json[DriverJsonKeys.logoUrl], isNull);
+      expect(json[DriverJsonKeys.photo], isNull);
+      expect(json[DriverJsonKeys.logo], isNull);
       expect(Driver.fromJson(json), bare);
     });
 
@@ -44,7 +58,15 @@ void main() {
         DriverJsonKeys.city: 'Franca',
       };
 
-      expect(Driver.fromJson(json).photoUrl, isNull);
+      expect(Driver.fromJson(json).photo, isNull);
+      expect(Driver.fromJson(json).logo, isNull);
+    });
+
+    test('foto com tamanho faltando lança FormatException', () {
+      final json = overTheWire(driver.toJson());
+      (json[DriverJsonKeys.photo]! as Map<String, Object?>).remove(PhotoJsonKeys.sizes);
+
+      expect(() => Driver.fromJson(json), throwsFormatException);
     });
 
     test('o modelo público não tem telefone nem e-mail', () {
@@ -55,8 +77,8 @@ void main() {
           DriverJsonKeys.name,
           DriverJsonKeys.nickname,
           DriverJsonKeys.city,
-          DriverJsonKeys.photoUrl,
-          DriverJsonKeys.logoUrl,
+          DriverJsonKeys.photo,
+          DriverJsonKeys.logo,
         ]),
       );
       expect(driver.toJson(), isNot(contains(AdminDriverJsonKeys.phone)));
@@ -110,7 +132,7 @@ void main() {
         unorderedEquals(<String>[
           CarJsonKeys.id,
           CarJsonKeys.name,
-          CarJsonKeys.photoUrls,
+          CarJsonKeys.photos,
           CarJsonKeys.workshop,
         ]),
       );
@@ -119,7 +141,7 @@ void main() {
     test('sem fotos e sem oficina vai como lista vazia e null', () {
       const bare = Car(id: 'c', name: 'Fusca');
 
-      expect(bare.toJson()[CarJsonKeys.photoUrls], isEmpty);
+      expect(bare.toJson()[CarJsonKeys.photos], isEmpty);
       expect(bare.toJson()[CarJsonKeys.workshop], isNull);
       expect(Car.fromJson(overTheWire(bare.toJson())), bare);
     });
@@ -147,14 +169,14 @@ void main() {
       expect(() => Car.fromJson(json), throwsFormatException);
     });
 
-    test('foto que não é texto lança FormatException', () {
-      final json = car.toJson()..[CarJsonKeys.photoUrls] = [1, 2];
+    test('foto que não é objeto lança FormatException', () {
+      final json = car.toJson()..[CarJsonKeys.photos] = ['https://cdn.example/a.jpg'];
 
       expect(() => Car.fromJson(json), throwsFormatException);
     });
 
     test('fotos em ordem diferente são carros diferentes', () {
-      final reversed = Car(id: car.id, name: car.name, photoUrls: car.photoUrls.reversed.toList());
+      final reversed = Car(id: car.id, name: car.name, photos: car.photos.reversed.toList());
 
       expect(reversed, isNot(car));
     });
@@ -294,7 +316,7 @@ void main() {
     const sponsor = Sponsor(
       id: '019a1b2c-0000-7000-8000-000000000005',
       name: 'Oficina Exemplo',
-      logoUrl: 'https://cdn.example/sponsors/5.png',
+      logo: _logo,
       linkUrl: 'https://oficina.example',
       description: 'Oficina de exemplo, aberta de segunda a sábado.',
       position: 2,
@@ -305,12 +327,7 @@ void main() {
     });
 
     test('sem link e sem texto vai e volta como null', () {
-      const bare = Sponsor(
-        id: 's',
-        name: 'Loja',
-        logoUrl: 'https://cdn.example/l.png',
-        position: 0,
-      );
+      const bare = Sponsor(id: 's', name: 'Loja', logo: _logo, position: 0);
       final json = overTheWire(bare.toJson());
 
       expect(json[SponsorJsonKeys.linkUrl], isNull);
@@ -324,10 +341,12 @@ void main() {
       expect(() => Sponsor.fromJson(json), throwsFormatException);
     });
 
-    test('sem logo lança FormatException', () {
-      final json = sponsor.toJson()..remove(SponsorJsonKeys.logoUrl);
+    test('sem logo, ou logo como endereço, lança FormatException', () {
+      final missing = sponsor.toJson()..remove(SponsorJsonKeys.logo);
+      final link = sponsor.toJson()..[SponsorJsonKeys.logo] = 'https://cdn.example/l.png';
 
-      expect(() => Sponsor.fromJson(json), throwsFormatException);
+      expect(() => Sponsor.fromJson(missing), throwsFormatException);
+      expect(() => Sponsor.fromJson(link), throwsFormatException);
     });
   });
 }

@@ -1,4 +1,5 @@
 import 'package:lista16_models/src/core/json_read.dart';
+import 'package:lista16_models/src/public/photo.dart';
 import 'package:lista16_models/src/public/workshop.dart';
 import 'package:meta/meta.dart';
 
@@ -6,7 +7,7 @@ import 'package:meta/meta.dart';
 abstract final class CarJsonKeys {
   static const id = 'id';
   static const name = 'name';
-  static const photoUrls = 'photoUrls';
+  static const photos = 'photos';
   static const workshop = 'workshop';
 }
 
@@ -16,13 +17,13 @@ abstract final class CarJsonKeys {
 /// da dupla (`Duo.showsHistory`, 5.3).
 @immutable
 final class Car {
-  const new({required this.id, required this.name, this.photoUrls = const [], this.workshop});
+  const new({required this.id, required this.name, this.photos = const [], this.workshop});
 
   /// Lê o JSON da API; lança [FormatException] se faltar campo ou o tipo não bater.
   factory Car.fromJson(JsonMap json) => Car(
     id: readString(json, CarJsonKeys.id),
     name: readString(json, CarJsonKeys.name),
-    photoUrls: readStringList(json, CarJsonKeys.photoUrls),
+    photos: readObjectList(json, CarJsonKeys.photos, Photo.fromJson),
     workshop: switch (readOptionalMap(json, CarJsonKeys.workshop)) {
       final workshop? => Workshop.fromJson(workshop),
       null => null,
@@ -35,8 +36,8 @@ final class Car {
   /// Nome ou apelido do carro.
   final String name;
 
-  /// Endereços das fotos do carro, na ordem de exibição. Vazia enquanto não chegou foto.
-  final List<String> photoUrls;
+  /// Fotos do carro, na ordem de exibição. Vazia enquanto não chegou foto.
+  final List<Photo> photos;
 
   /// Oficina que prepara o carro, ou `null` se não foi cadastrada.
   final Workshop? workshop;
@@ -45,7 +46,7 @@ final class Car {
   JsonMap toJson() => {
     CarJsonKeys.id: id,
     CarJsonKeys.name: name,
-    CarJsonKeys.photoUrls: photoUrls,
+    CarJsonKeys.photos: [for (final photo in photos) photo.toJson()],
     CarJsonKeys.workshop: workshop?.toJson(),
   };
 
@@ -54,9 +55,9 @@ final class Car {
       other is Car &&
       other.id == id &&
       other.name == name &&
-      listEquals(other.photoUrls, photoUrls) &&
+      listEquals(other.photos, photos) &&
       other.workshop == workshop;
 
   @override
-  int get hashCode => Object.hash(id, name, Object.hashAll(photoUrls), workshop);
+  int get hashCode => Object.hash(id, name, Object.hashAll(photos), workshop);
 }

@@ -1,3 +1,14 @@
+## 0.13.0
+
+As fotos passam a ser `Photo`, tratada pela API, no lugar dos links. Quebra o contrato, o que
+vale antes da 1.0.0.
+
+- **Quebra:** `Driver.photoUrl` e `Driver.logoUrl` viram `Driver.photo` e `Driver.logo`
+  (`Photo?`, chaves `photo` e `logo`).
+- **Quebra:** `Car.photoUrls` vira `Car.photos` (`List<Photo>`, chave `photos`).
+- **Quebra:** `Sponsor.logoUrl` vira `Sponsor.logo` (`Photo`, obrigatória, chave `logo`).
+- O painel manda de volta a `Photo` que recebeu do envio; a API usa só o `id` dela.
+
 ## 0.12.0
 
 Foto tratada pela API. Só acrescenta: os campos de link (`Driver.photoUrl`, `Driver.logoUrl`,
