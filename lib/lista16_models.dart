@@ -17,6 +17,7 @@ export 'src/enums/challenge_status.dart';
 export 'src/enums/event_status.dart';
 export 'src/enums/movement_cause.dart';
 export 'src/enums/race_outcome.dart';
+export 'src/limits/text_limits.dart';
 export 'src/public/car.dart';
 export 'src/public/challenge.dart';
 export 'src/public/driver.dart';

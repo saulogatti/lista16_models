@@ -1,3 +1,13 @@
+## 0.14.0
+
+Descrição do evento e limites dos textos. Só acrescenta.
+
+- `RaceEvent.description`: texto opcional da organização para quem vai (como chegar, o que
+  levar, horário), chave `description`. É público. Sem a chave ou com `null`, fica sem
+  descrição.
+- `TextLimits`: tamanho máximo, em caracteres (ponto de código), de cada texto livre que o
+  painel manda. O painel mostra o número no campo e a API recusa o que passar dele.
+
 ## 0.13.0
 
 As fotos passam a ser `Photo`, tratada pela API, no lugar dos links. Quebra o contrato, o que

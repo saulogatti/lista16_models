@@ -26,7 +26,7 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 | `public/` | `Photo` | foto tratada pela API: id tirado do conteúdo e os tamanhos (`PhotoSize`: largura, altura e caminho a partir do endereço da API), do menor para o maior |
 | `public/` | `Workshop` | oficina que prepara o carro: nome e Instagram opcional, sem o `@` |
 | `public/` | `Duo` | dupla piloto + carro, que é quem ocupa a posição, e se o site mostra o histórico de desafios dela (`showsHistory`, 5.3) |
-| `public/` | `RaceEvent` | evento da lista: data, pista e `EventStatus` (agendado, em andamento, encerrado ou cancelado) |
+| `public/` | `RaceEvent` | evento da lista: data, pista, descrição opcional (como chegar, o que levar) e `EventStatus` (agendado, em andamento, encerrado ou cancelado) |
 | `public/` | `SiteContent` | conteúdo das páginas fixas: `SiteTexts` (sobre e regulamento) e `SiteContacts` (WhatsApp, Instagram e e-mail da organização) |
 | `public/` | `Sponsor` | patrocinador: nome, logo, link, texto de detalhes opcional e ordem de exibição |
 | `public/` | `LadderEntry` | posição na lista (de 1 a 10) e a dupla |
@@ -41,6 +41,7 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 | `admin/` | `AdminMovement` | `Movement` mais o editor que fez a mudança, só para o painel |
 | `admin/` | `AdminPublication` | situação da publicação do site: fila (`PublicationQueue`), se há alteração não publicada, quando o site no ar foi gerado e a última tentativa (`PublicationAttempt`) |
 | `enums/` | `EventStatus`, `ChallengeOrigin`, `ChallengeStatus`, `RaceOutcome`, `MovementCause` | situação do evento, origem e situação do desafio, motivo do resultado e causa do movimento |
+| `limits/` | `TextLimits` | tamanho máximo, em caracteres, de cada texto livre que o painel manda: o painel mostra no campo e a API confere |
 
 `public/` é o que o site pode receber; `admin/` acrescenta o que só o painel vê. Carro, evento,
 conteúdo e patrocinador não têm dado privado, então o painel usa os mesmos tipos de `public/`.
