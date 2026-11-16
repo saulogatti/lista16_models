@@ -14,7 +14,9 @@ aqui:
 - segredo ou credencial: token (inclusive o de desenvolvimento do admin), senha, chave,
   `.env`, string de conexão;
 - endereço interno: host da VPS, caminho no servidor, porta do banco;
-- validação do backend ou detalhe de como ele se protege (autenticação, limites);
+- detalhe de como o backend se protege: autenticação, sessão, senha, limite de tentativas ou
+  de tamanho do corpo e do arquivo. O tamanho máximo dos campos de texto (`TextLimits`) pode,
+  porque o painel mostra o número no contador do campo; é tratamento de tela, não proteção;
 - dado real de piloto (nome, telefone, e-mail, foto) em teste ou exemplo. Use dado inventado.
 
 Na dúvida, o lugar é o repositório privado que usa a informação.
@@ -43,6 +45,8 @@ A estrutura proposta separa o que o site recebe do que o painel recebe:
   recebe (`AdminPublication`); no resto o painel usa o tipo de `public/`. As chaves dos corpos
   que o painel manda ficam em `*InputJsonKeys` (`admin_duo.dart`, `ladder_inputs.dart`).
 - `lib/src/enums/`: enums do domínio. Só entra enum com os valores já decididos pelo dono.
+- `lib/src/limits/`: tamanho máximo dos textos livres (`TextLimits`), que o painel mostra no
+  campo e a API confere. Mudar um número muda o contrato: nova versão.
 - `lib/src/core/`: leitura de JSON, interno. Não é exportado.
 
 Desafio, Corrida e Movimento entraram na 0.6.0. Na 0.10.0 viraram registro livre (8.2), e a

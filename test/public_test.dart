@@ -234,6 +234,30 @@ void main() {
       expect(RaceEvent.fromJson(overTheWire(event.toJson())), event);
     });
 
+    test('descrição vai e volta, e sem a chave fica sem descrição', () {
+      final described = RaceEvent(
+        id: event.id,
+        date: event.date,
+        track: event.track,
+        description: 'Portão 2.\nLevar documento do carro.',
+        status: event.status,
+      );
+
+      expect(RaceEvent.fromJson(overTheWire(described.toJson())), described);
+      expect(described, isNot(event));
+      expect(event.toJson()[RaceEventJsonKeys.description], isNull);
+      expect(
+        RaceEvent.fromJson(event.toJson()..remove(RaceEventJsonKeys.description)).description,
+        isNull,
+      );
+    });
+
+    test('descrição que não é texto lança FormatException', () {
+      final json = event.toJson()..[RaceEventJsonKeys.description] = 42;
+
+      expect(() => RaceEvent.fromJson(json), throwsFormatException);
+    });
+
     test('a data vai sem hora', () {
       expect(event.toJson()[RaceEventJsonKeys.date], '2026-12-05');
       expect(event.toJson()[RaceEventJsonKeys.status], 'scheduled');
