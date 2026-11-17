@@ -1,3 +1,13 @@
+## 0.15.0
+
+Os dados publicados num arquivo só. Só acrescenta.
+
+- `PublishedData`: o que o site publicou (duplas, agenda, conteúdo, patrocinadores, lista,
+  desafios pendentes e histórico), com a data da leitura (`publishedAt`), o endereço de onde
+  saem as fotos (`mediaBaseUrl`) e a versão do formato (`formatVersion`, hoje 1). O build do
+  site grava o arquivo para o app ler o mesmo que o site mostra. Só tipos públicos.
+- `fromJson` recusa versão do formato diferente de `PublishedData.currentFormatVersion`.
+
 ## 0.14.0
 
 Descrição do evento e limites dos textos. Só acrescenta.
