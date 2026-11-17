@@ -32,6 +32,7 @@ Mudou o contrato: nova versão no `pubspec.yaml`, entrada no `CHANGELOG.md` e ta
 | `public/` | `LadderEntry` | posição na lista (de 1 a 10) e a dupla |
 | `public/` | `Challenge` | desafio lançado livre pela organização: duplas, evento, origem, situação, resultado da corrida e a reação de cada um |
 | `public/` | `Movement` | mudança de posição na lista, com a causa e o motivo opcional; é a história da lista |
+| `public/` | `PublishedData` | o que o site publicou, num arquivo só (duplas, agenda, conteúdo, patrocinadores, lista, desafios e histórico), com a data, o endereço das fotos e a versão do formato. O build do site grava; o app lê |
 | `admin/` | `AdminDriver` | `Driver` mais telefone (obrigatório) e e-mail, só para o painel |
 | `admin/` | `AdminDuo` | dupla com o `AdminDriver`, a marca do histórico e a posição na lista; `DuoInputJsonKeys` são as chaves do corpo com que o painel cria e edita a dupla, com o piloto e o carro juntos |
 | `admin/` | `AdminRaceRun` | tempos da cronometragem de uma dupla numa corrida, todos opcionais |
