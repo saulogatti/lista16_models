@@ -1,14 +1,14 @@
 name: lista16_models
 description: Modelos compartilhados da Lista 16 (cadastro, lista, desafios, conteúdo do site, publicação e enums).
 publish_to: none
-version: 0.15.0
+version: 0.16.0
 
 environment:
-  sdk: ^3.13.7
+  sdk: ^3.14.0
 
 dependencies:
-  meta: ^1.17.0
+  meta: ^1.19.0
 
 dev_dependencies:
-  lints: ^6.0.0
-  test: ^1.25.6
+  lints: ^6.1.0
+  test: ^1.33.0

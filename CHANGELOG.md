@@ -1,3 +1,12 @@
+## 0.16.0
+
+Autalização do dart e dos pacotes.
+
+- Suporte ao dart 3.14.0.
+- Suporte ao meta 1.19.0.
+- Suporte ao lints 6.1.0.
+- Suporte ao test 1.33.0.
+
 ## 0.15.0
 
 Os dados publicados num arquivo só. Só acrescenta.
